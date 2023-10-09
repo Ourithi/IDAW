@@ -1,9 +1,10 @@
 .menu{
-    display: flex;
+    display: block;
     flex-flow: column wrap;
-    align-items: center;
-    justify-content: space-around;
-    align-content: space-around;
+    align-items: left;
+    justify-content: left;
+    padding-left: 10px;
+    align-content: left;
     background-color: #0AD; /*Bleu*/
     width: 100%;
     height: 200px;
@@ -12,18 +13,23 @@
 }
 
 .contenu{
-    display: flex;
+    display: block;
     flex-flow: column wrap;
-    align-items: center;
+    align-items: left;
     justify-content: space-around;
-    align-content: space-around;
+    align-content: left;
+    line-height: 5px;
+    padding-left: 10px;
     background-color: rgb(203, 221, 0); /*Bleu*/
     width: 100%;
-    height: 200px;
+    height: 250px;
     border: 2px solid blue;
     box-sizing: border-box;
 }
 
 #currentpage {
     background-color: chocolate;
+}
+.contenu-CV{
+    clear: both
 }

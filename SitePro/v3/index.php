@@ -5,6 +5,10 @@
     if(isset($_GET['page'])) {
         $currentPageId = $_GET['page'];
     }
+    $lang = 'fr';
+    if(isset($_GET['lang'])) {
+        $lang = $_GET['lang'];
+    }
 ?>
 
 <header class="bandeau_haut">
@@ -12,7 +16,7 @@
 </header>
 
 <?php
-    renderMenuToHTML($currentPageId);
+    renderMenuToHTML($currentPageId,$lang);
 ?>
 
 <section class="corps">

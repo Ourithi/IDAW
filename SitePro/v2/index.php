@@ -11,6 +11,9 @@
 </header>
 
 <body>
+    <?php
+        require_once('template_header.php');
+    ?>
     <nav class="menu">
         <ul>
             <li><a id="currentpage" href="index.html">Accueil</a></li>

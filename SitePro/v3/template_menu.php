@@ -13,10 +13,10 @@
         echo "<ul>";
         foreach($mymenu as $pageId => $pageParameters) {
             if($currentPageId==$pageId) {
-                echo "<li><a id=currentpage href=".$pageId.".php>".$pageParameters[0]."</a></li>";
+                echo '<li><a id=currentpage href="http://localhost/IDAW/SitePro/v3/index.php?page="'.$pageId.'">'.$pageParameters[0] .'</a></li>';
             }
             else {
-                echo "<li><a href=".$pageId.".php>".$pageParameters[0]."</a></li>";
+                echo '<li><a href="http://localhost/IDAW/SitePro/v3/index.php?page='.$pageId.'">'.$pageParameters[0].' </a></li>';
             }
         }
         echo "</ul>";

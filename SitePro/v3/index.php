@@ -8,7 +8,7 @@
 ?>
 
 <header class="bandeau_haut">
-    <h1 class="titre">Hector Durand</h1>
+    <h1 class="titre">Thibault Ouriachi</h1>
 </header>
 
 <?php

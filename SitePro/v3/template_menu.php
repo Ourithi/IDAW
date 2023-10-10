@@ -3,7 +3,7 @@
         // un tableau qui d\'efinit la structure du site
         $mymenu = array(
             // idPage titre
-            'index' => array( 'Accueil' ),
+            'accueil' => array( 'Accueil' ),
             'cv' => array( 'CV' ),
             'projets' => array('Mes Projets'),
             'hobbies' => array('Mes hobbies'),

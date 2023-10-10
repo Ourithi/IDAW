@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CV</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<?php
+    require_once('template_header.php');
+?>
 
-<title>Projets</title>
-<header>
-    <h1>Projets</h1>
-</header>
 
-<body>
-    <?php
-        require_once('template_header.php');
-    ?>
     <nav class="menu">
         <ul>
             <li><a href="index.html">Accueil</a></li>

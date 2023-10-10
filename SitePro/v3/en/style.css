@@ -1,0 +1,46 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.menu ul{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    padding-left: 0px;
+}
+
+.contenu{
+    display: block;
+    flex-flow: column wrap;
+    align-items: left;
+    justify-content: space-around;
+    align-content: left;
+    line-height: 5px;
+    padding-left: 10px;
+    background-color: rgb(248, 134, 4); /*Bleu*/
+    width: 100%;
+    height: auto;
+    border: 2px solid rgb(0, 0, 0);
+    box-sizing: border-box;
+}
+
+#currentpage {
+    background-color: rgb(33, 30, 210);
+}
+.menu ul li a:hover{
+    background-color: rgb(33, 30, 210);
+}
+
+  .menu ul li{
+    list-style-type:none;
+  }
+
+  .menu ul li a{
+    display: inline-block;
+    text-decoration: none;
+    text-align: middle;
+    color:black;
+    background-color: aqua;
+    margin-left: 1em;
+    padding: 0.5em;
+    border: 2px solid black;
+  }

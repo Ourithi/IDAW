@@ -19,11 +19,7 @@
         <p>Boxe tha&iuml;</p>
         <p>&Eacute;checs</p>
     </div>
-</body>
 
-<footer>
-    <p>Auteur: Thibault Ouriachi</p>
-    <p>contact: <a href="mailto:thibault.ouriachi@gmail.com">thibault.ouriachi@gmail.com</a></p>
-</footer>
-
-</html>
+<?php
+    require_once('template_footer.php');
+?>

@@ -17,10 +17,7 @@
 
         <p><a href="http://localhost/IDAW/SitePro/v1/index.html">Projet IDAW</a></p>
     </div>
-</body>
 
-<footer>
-    <p>Auteur: Thibault Ouriachi</p>
-    <p>contact: <a href="mailto:thibault.ouriachi@gmail.com">thibault.ouriachi@gmail.com</a></p>
-</footer>
-</html>
+<?php
+    require_once('template_footer.php');
+?>

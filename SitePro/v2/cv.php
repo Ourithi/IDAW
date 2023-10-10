@@ -37,11 +37,7 @@
            <p> Pour t&eacute;l&eacute;charger mon CV complet, cliquez <a href="CV.pdf" attributes-list download>ici</a></div>
         </div>
     </div>
-</body>
 
-<footer>
-    <p>Auteur: Thibault Ouriachi</p>
-    <p>contact: <a href="mailto:thibault.ouriachi@gmail.com">thibault.ouriachi@gmail.com</a></p>
-</footer>
-
-</html>
+<?php
+    require_once('template_footer.php');
+?>

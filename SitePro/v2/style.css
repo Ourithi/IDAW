@@ -4,15 +4,8 @@
 .menu ul{
     display: flex;
     flex-flow: row nowrap;
-    align-items: left;
     justify-content: left;
     padding-left: 0px;
-    align-content: left;
-    background-color: #0AD; /*Bleu*/
-    width: 100%;
-    height: auto;
-    border: 2px solid black;
-    box-sizing: border-box;
 }
 
 .contenu{
@@ -32,24 +25,22 @@
 
 #currentpage {
     background-color: rgb(33, 30, 210);
-    width: 80px;
 }
 .menu ul li a:hover{
     background-color: rgb(33, 30, 210);
 }
 
   .menu ul li{
-    display: inline-block;
-    font-size: large;
-    text-align: center;
     list-style-type:none;
-    border-right: 2px solid black;
-    width:80px 
   }
 
   .menu ul li a{
     display: inline-block;
     text-decoration: none;
-    width: 80px;
-    color:black
+    text-align: middle;
+    color:black;
+    background-color: aqua;
+    margin-left: 1em;
+    padding: 0.5em;
+    border: 2px solid black;
   }

@@ -3,14 +3,10 @@
 ?>
 
 
-    <nav class="menu">
-        <ul>
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="cv.html">CV</a></li>
-            <li><a id="currentpage" href="hobbies.html">Hobbies</a></li>
-            <li><a href="projets.html">Projets</a></li>
-        </ul>
-    </nav>
+<?php
+    require_once('template_menu.php');
+    renderMenuToHTML('hobbies');
+?>
 
     <div class="contenu">
         <h2>Hobbies</h2>

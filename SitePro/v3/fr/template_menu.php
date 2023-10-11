@@ -27,7 +27,7 @@
                 echo '<li><a href="'.$url.$pageId.'">'.$pageParameters[$i].' </a></li>';
             }
         }
-        echo <a href='http://localhost/IDAW/SitePro/v3/'.$chgt.'/index.php?lang='.$chgt.'&page='><img src='en_flag.png'>      </a>";
+        echo '<li><a href="http://localhost/IDAW/SitePro/v3/'.$chgt.'/index.php?lang='.$chgt.'&page='.$currentPageId.'"><img src="en_flag.png"> </a></li>';
         echo "</ul>";
         echo "</nav";
     }

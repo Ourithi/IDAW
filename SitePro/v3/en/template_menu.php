@@ -2,8 +2,10 @@
     function renderMenuToHTML($currentPageId,$lang) {
         // un tableau qui d\'efinit la structure du site
         $i=0;
+        $chgt='fr';
         if($lang=='en'){
             $i=1;
+            $chgt='fr';
         }
         $url='http://localhost/IDAW/SitePro/v3/'.$lang.'/index.php?lang='.$lang.'&page=';
             // idPage titre
@@ -25,6 +27,7 @@
                 echo '<li><a href="'.$url.$pageId.'">'.$pageParameters[$i].' </a></li>';
             }
         }
+        echo '<li><a href="http://localhost/IDAW/SitePro/v3/'.$chgt.'/index.php?lang='.$chgt.'&page='.$currentPageId.'"><img src="fr_flag.png"> </a></li>';
         echo "</ul>";
         echo "</nav";
     }

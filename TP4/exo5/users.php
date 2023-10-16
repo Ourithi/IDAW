@@ -33,4 +33,17 @@ if($_SERVER['REQUEST_METHOD']== 'GET'){
     }
 }
 
-elseif($_SERVER['REQUEST_METHOD']== 'POST')
+elseif($_SERVER['REQUEST_METHOD']== 'POST'){
+
+    if(isset($_POST['user']) && isset($_POST['email'])){
+        $query=$pdo->prepare('INSERT INTO `users`(`name`, `email`) VALUES ("'.$user.'","'.$email.'")');
+        $success=$query->execute();
+        if($success){
+            http_response_code(200);
+            $query=$pdo->prepare('SELECT * FROM `users`WHERE `email`='.$email);
+            $query->execute();
+            //finir le render de l'utilisateur ajouté
+
+        }
+    }
+}

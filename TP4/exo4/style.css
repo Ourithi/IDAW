@@ -1,0 +1,7 @@
+table tr td {
+    border: solid 1px black
+}
+
+table tr th {
+    border: solid 2px black
+}

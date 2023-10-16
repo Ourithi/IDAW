@@ -1,5 +1,4 @@
 <?php
-    require_once('template_header.php');
     require_once('config.php');
     $connectionString = "mysql:host=". _MYSQL_HOST;
     if(defined('_MYSQL_PORT'))
@@ -13,12 +12,4 @@
     }
     catch (PDOException $erreur) {
         echo 'Erreur : '.$erreur->getMessage();
-    }
-    if(isset($_POST['user']) && isset($_POST['email'])){
-        $user=$_POST['user'];
-        $email=$_POST['email'];
-        $request = $pdo->prepare('INSERT INTO `users`(`name`, `email`) VALUES ("'.$user.'","'.$email.'")');
-        $request->execute();
-        echo "<p>L'utilisateur à bien été ajouté</p><br><p><a href=users.php>Retour au tableau des utilisateurs</a></p>";
-        
     }

@@ -71,7 +71,7 @@ elseif($_SERVER['REQUEST_METHOD']== 'POST'){
 
 elseif($_SERVER['REQUEST_METHOD']=='PUT'){
 
-    parse_str(file_get_contents('php://input'), $put);
+    $put=json_decode(file_get_contents('php://input'),true);
 
     if(isset($put['id']) && isset($put['name']) && isset($put['email'])){
         $id=$put['id'];
@@ -112,7 +112,7 @@ elseif($_SERVER['REQUEST_METHOD']=='PUT'){
 }
 
 elseif($_SERVER['REQUEST_METHOD']=='DELETE'){
-    parse_str(file_get_contents('php://input'), $del);
+    $del=json_decode(file_get_contents('php://input'), true);
     if(isset($del['id'])){
         $id=$del['id'];
         $query=$pdo->prepare("DELETE FROM `users` WHERE `id`=".$id);

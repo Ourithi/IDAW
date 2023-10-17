@@ -2,7 +2,7 @@
 // required headers
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: access");
-header("Access-Control-Allow-Methods: GET,POST");
+header("Access-Control-Allow-Methods: GET,POST,PUT");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
 
@@ -70,14 +70,44 @@ elseif($_SERVER['REQUEST_METHOD']== 'POST'){
 }
 
 elseif($_SERVER['REQUEST_METHOD']=='PUT'){
-    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
-    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
+
     parse_str(file_get_contents('php://input'), $put);
+
     if(isset($put['id']) && isset($put['name']) && isset($put['email'])){
         $id=$put['id'];
         $name=$put['name'];
         $email=$put['email'];
-        $query=$pdo->prepare('UPDATE `users` SET `name`="'.$user.'",`email`="'.$email.'" WHERE `id`="'.$_POST['id'].'"');
+        $query=$pdo->prepare('UPDATE `users` SET `name`="'.$name.'",`email`="'.$email.'" WHERE `id`="'.$id.'"');
         $success=$query->execute();
+        if($success){
+            $query=$pdo->prepare('SELECT * FROM `users`WHERE `id`="'.$id.'"');
+            $success=$query->execute();
+            if($success){
+                $user=$query->fetch(PDO::FETCH_OBJ);
+                $user=array(
+                    "id"=> $user->id,
+                    "name"=> $user->name,
+                    "email"=>$user->email
+                );
+                echo json_encode($user);
+                http_response_code(200);
+
+            }
+            else{
+                http_response_code(500);
+                echo json_encode(array("message"=> "Internal server error"));
+            }
+
+        }
+        else{
+            http_response_code(500);
+            echo json_encode(array("message"=> "Internal server error"));
+        }
+    
+    }
+    else{
+        http_response_code(500);
+        echo json_encode(array("message"=> "Internal server error"));
     }
 }
+

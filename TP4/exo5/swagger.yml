@@ -1,0 +1,79 @@
+openapi: 3.0.3
+info:
+  title: Swagger TP4 exo5 - OpenAPI 3.0
+  description: |-
+    Swagger pour TP4 exo 5
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+  - name: users
+    description: Utilisateurs
+    externalDocs:
+      description: Find out more
+      url: http://swagger.io
+paths:
+  /users.php:
+    put:
+      tags:
+        - users
+      summary: Update an existing user
+      description: Update an existing user by Id
+      requestBody:
+        description: Update an existent user in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Opération réussie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Paramètre manquant
+        '500':
+          description: Problème lors de l'exécution de la requête
+    post:
+      tags:
+        - pet
+      summary: Add a new user to the database
+      description: Add a new user to the database
+      requestBody:
+        description: Create a new user in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '405':
+          description: Invalid input
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets

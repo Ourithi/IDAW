@@ -36,14 +36,48 @@ if($_SERVER['REQUEST_METHOD']== 'GET'){
 elseif($_SERVER['REQUEST_METHOD']== 'POST'){
 
     if(isset($_POST['user']) && isset($_POST['email'])){
+        $user=$_POST['user'];
+        $email=$_POST['email'];
         $query=$pdo->prepare('INSERT INTO `users`(`name`, `email`) VALUES ("'.$user.'","'.$email.'")');
         $success=$query->execute();
         if($success){
-            http_response_code(200);
-            $query=$pdo->prepare('SELECT * FROM `users`WHERE `email`='.$email);
-            $query->execute();
-            //finir le render de l'utilisateur ajouté
-
+            $query=$pdo->prepare('SELECT * FROM `users`WHERE `email`="'.$email.'"');
+            $success=$query->execute();
+            if($success){
+                $user=$query->fetch(PDO::FETCH_OBJ);
+                $user=array(
+                    "id"=> $user->id,
+                    "name"=> $user->name,
+                    "email"=>$user->email
+                );
+                echo json_encode($user);
+                http_response_code(201);
+            }
+            else{
+                http_response_code(500);
+                echo json_encode(array("message"=> "Internal server error"));
+            }
         }
+        else{
+            http_response_code(500);
+            echo json_encode(array("message"=> "Internal server error"));
+        }
+    }
+    else{
+        http_response_code(500);
+        echo json_encode(array("message"=> "Internal server error"));
+    }
+}
+
+elseif($_SERVER['REQUEST_METHOD']=='PUT'){
+    curl_setopt($handle, CURLOPT_CUSTOMREQUEST, 'PUT');
+    curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
+    parse_str(file_get_contents('php://input'), $put);
+    if(isset($put['id']) && isset($put['name']) && isset($put['email'])){
+        $id=$put['id'];
+        $name=$put['name'];
+        $email=$put['email'];
+        $query=$pdo->prepare('UPDATE `users` SET `name`="'.$user.'",`email`="'.$email.'" WHERE `id`="'.$_POST['id'].'"');
+        $success=$query->execute();
     }
 }

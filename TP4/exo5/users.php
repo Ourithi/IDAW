@@ -64,8 +64,8 @@ elseif($_SERVER['REQUEST_METHOD']== 'POST'){
         }
     }
     else{
-        http_response_code(500);
-        echo json_encode(array("message"=> "Internal server error"));
+        http_response_code(400);
+        echo json_encode(array("message"=> "Bad request"));
     }
 }
 
@@ -106,8 +106,35 @@ elseif($_SERVER['REQUEST_METHOD']=='PUT'){
     
     }
     else{
-        http_response_code(500);
-        echo json_encode(array("message"=> "Internal server error"));
+        http_response_code(400);
+        echo json_encode(array("message"=> "Bad request"));
     }
 }
 
+elseif($_SERVER['REQUEST_METHOD']=='DELETE'){
+    parse_str(file_get_contents('php://input'), $del);
+    if(isset($del['id'])){
+        $id=$del['id'];
+        $query=$pdo->prepare("DELETE FROM `users` WHERE `id`=".$id);
+        $success=$query->execute();
+        if($success){
+            http_response_code(200);
+            echo json_encode(array(
+                'message'=> "L'utilisateur a bien été supprimé")
+            );
+        }
+        else{
+            http_response_code(500);
+            echo json_encode(array("message"=> "Internal server error"));
+        }
+    }
+    else{
+        http_response_code(400);
+        echo json_encode(array("message"=> "Bad request"));
+    }
+}
+
+else{
+    http_response_code(405);
+    echo json_encode(array("message"=> "Method not allowed"));
+}

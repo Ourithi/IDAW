@@ -58,6 +58,7 @@
         </form>
         <script>
             let erreur = false;
+            let id = 0;
             function onFormSubmit() {
                 // prevent the form to be sent to the server
                 event.preventDefault();
@@ -71,18 +72,62 @@
                     aime = "Oui";
                 }
                 if (nom != ""){
-                    $("#studentsTableBody").append(`<tr><td>${nom}</td><td>${prenom}</td><td>${date}</td><td>${aime}</td><td>${remarques}</td><td></td><td></td></tr>`);
+                    $("#studentsTableBody").append(`<tr id=${id}><td id="nom">${nom}</td><td id="prenom">${prenom}</td><td id="date">${date}</td><td id="aime">${aime}</td><td id="remarques">${remarques}</td><td><button onclick="editData(this)">Edit</button><button onclick="delete_row(this)">Delete</button></td><td></td></tr>`);
                     $('#addStudentButton > tr > td').remove();
                     $('#addStudentButton > tr ').remove();
                     erreur = false;       
+                    id++;
                 }
                 else if (!erreur){
                     // $("#addStudentButton > tr").empty();
                     $("#addStudentButton").append(`<tr><td>Le champ nom doit être rempli!</td></tr>`);
                     erreur = true;
-                    console.log(erreur);
+                    //console.log(erreur);
                 }
             }
+            function editData(button) { 
+            
+            // Get the parent row of the clicked button 
+            let row = button.parentNode.parentNode; 
+            
+            // Get the cells within the row 
+            let nom = row.cells[0]; 
+            let prenom = row.cells[1]; 
+            let date = row.cells[2]; 
+            let aime = row.cells[3]; 
+            let remarques = row.cells[4];
+            
+            // Prompt the user to enter updated values 
+            let nameInput = 
+                prompt("Modifier le nom:", 
+                    nom.innerHTML); 
+            let emailInput = 
+                prompt("Modifier le prenom:", 
+                    prenom.innerHTML); 
+            let dateInput = 
+                prompt("Modifier la date:", 
+                    date.innerHTML 
+                ); 
+            let aimeInput = 
+                prompt("Modifier la réponse:", 
+                    aime.innerHTML 
+                ); 
+            let remarquesInput = 
+            prompt("Modifier les remarques:", 
+                remarques.innerHTML 
+            );
+            
+            // Update the cell contents with the new values 
+            nom.innerHTML = nameInput; 
+            prenom.innerHTML = emailInput; 
+            date.innerHTML = numberInput; 
+            aime.innerHTML = addressInput; 
+            remarques.innerHTML = addressInput;
+        }
+        function delete_row(button){
+            let row = button.parentNode.parentNode;
+            row.remove();
+        }
         </script>
     </body>
 </html>

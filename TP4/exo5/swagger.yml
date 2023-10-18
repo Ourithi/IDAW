@@ -30,50 +30,115 @@ paths:
       description: Update an existing user by Id
       requestBody:
         description: Update an existent user in the database
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Pet'
+        schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  format: "int64"
+                name:
+                  type: "string"
+                email:
+                  type: "string"
         required: true
       responses:
-        '200':
+        200:
           description: Opération réussie
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
-        '400':
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  format: "int64"
+                name:
+                  type: "string"
+                email:
+                  type: "string"
+        400:
           description: Paramètre manquant
-        '500':
+        500:
           description: Problème lors de l'exécution de la requête
+
     post:
-      tags:
-        - pet
       summary: Add a new user to the database
       description: Add a new user to the database
       requestBody:
         description: Create a new user in the database
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Pet'
+        schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                name:
+                  type: "string"
+                email:
+                  type: "string"
         required: true
       responses:
-        '200':
+        200:
           description: Successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Pet'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/Pet'
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  format: "int64"
+                name:
+                  type: "string"
+                email:
+                  type: "string"
         '405':
           description: Invalid input
-      security:
-        - petstore_auth:
-            - write:pets
-            - read:pets
+    get:
+      summary: "Get Users"
+      description: "Get a list of users"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  format: "int64"
+                name:
+                  type: "string"
+                email:
+                  type: "string"
+        500:
+          description: "Internal server error"
+      tags:
+        - "Users"
+    delete:
+      summary: "Delete User"
+      description: "Delete a user"
+      schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                  format: "int64"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                message:
+                  type: "string"
+        500:
+          description: "Internal server error"
+      tags:
+        - "Users"

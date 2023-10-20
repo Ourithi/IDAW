@@ -47,6 +47,7 @@
         </form>
         <script>
             let erreur = false;
+
             function onFormSubmit() {
                 // prevent the form to be sent to the server
                 event.preventDefault();
@@ -64,6 +65,7 @@
                     //console.log(erreur);
                 }
             }
+
             function editData(button) { 
             
             // Get the parent row of the clicked button 
@@ -73,19 +75,44 @@
             let id = row.cells[0]; 
             let user = row.cells[1]; 
             let email = row.cells[2]; 
+            let buttonCell=row.cells[3];
+
+            //save initial values for placeholders
+            let userInitVal=user.innerHTML;
+            let emailInitVal=email.innerHTML;
             
             // Prompt the user to enter updated values 
-            let nameInput = 
-                prompt("Modifier le user:", 
-                    user.innerHTML); 
-            let emailInput = 
-                prompt("Modifier le email:", 
-                    email.innerHTML); 
+            user.innerHTML = `<input type='text' value=${userInitVal} class='form-control' id='editUser' >`;
+            email.innerHTML = `<input type='text' value=${emailInitVal} class='form-control' id='editEmail' >`;
+            buttonCell.innerHTML= '<button onclick="sendData(this)">Send</button><button onclick="delete_row(this)">Delete</button>';
+
             
-            // Update the cell contents with the new values 
-            user.innerHTML = nameInput; 
-            email.innerHTML = emailInput; 
         }
+
+        function sendData(button){
+
+            let row = button.parentNode.parentNode; 
+            
+            // Get the cells within the row 
+            let id = row.cells[0]; 
+            let user = row.cells[1]; 
+            let email = row.cells[2]; 
+            let buttonCell=row.cells[3];
+
+            let userVal = $('#editUser').val();
+            let emailVal = $('#editEmail').val();
+            let idVal = id.innerHTML;
+
+            //on remplace les valeurs dans le tableau et on remet le bouton a la normale
+            user.innerHTML=userVal;
+            email.innerHTML=emailVal;
+            buttonCell.innerHTML='<button onclick="editData(this)">Edit</button><button onclick="delete_row(this)">Delete</button>';
+            editAjax(userVal,emailVal,idVal);
+            //on modifie les valeurs dans la table
+
+
+        };
+
         function delete_row(button){
             let row = button.parentNode.parentNode;
             row.remove();
@@ -143,6 +170,35 @@
                 data: jsonData,
                 contentType: 'application/json',
                 success: function (data) {
+                    $("#addStudentButton").append(`<tr><td id=succès>Succès</td></tr>`);
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    $("#addStudentButton").append(`<tr><td id=erreur>Une erreur est survenue</td></tr>`);
+                    return "erreur";
+                }
+            });
+        };
+
+        function editAjax(userVal,emailVal,idVal){
+
+            var formData = {
+                name: userVal,
+                email: emailVal,
+                id:idVal
+            };
+            var jsonData = JSON.stringify(formData);
+            console.log(jsonData);
+
+            $.ajax({
+                url: 'http://localhost/IDAW/TP4/exo5/users.php',  // Replace with the actual API endpoint URL
+                type: 'PUT',
+                
+                data: jsonData,
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log(data);
                     $("#addStudentButton").append(`<tr><td id=succès>Succès</td></tr>`);
 
                 },

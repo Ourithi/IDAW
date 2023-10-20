@@ -89,6 +89,7 @@
         function delete_row(button){
             let row = button.parentNode.parentNode;
             row.remove();
+            delAjax(button);
         }
 
         $(document).ready( function () {
@@ -123,6 +124,31 @@
                 error: function (xhr, status, error) {
                     // Handle errors here
                     $("#addStudentButton").append(`<tr><td>Une erreur est survenue</td></tr>`);
+                    return "erreur";
+                }
+            });
+        };
+
+        function delAjax(button){
+            let cellId=button.parentNode.parentNode.cells[0];
+            let idVal=cellId.innerHTML;
+            var formData = {
+                id: idVal
+            };
+            var jsonData = JSON.stringify(formData);
+
+            $.ajax({
+                url: 'http://localhost/IDAW/TP4/exo5/users.php',  // Replace with the actual API endpoint URL
+                type: 'DELETE',
+                data: jsonData,
+                contentType: 'application/json',
+                success: function (data) {
+                    $("#addStudentButton").append(`<tr><td id=succès>Succès</td></tr>`);
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    $("#addStudentButton").append(`<tr><td id=erreur>Une erreur est survenue</td></tr>`);
                     return "erreur";
                 }
             });

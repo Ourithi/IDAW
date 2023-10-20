@@ -4,8 +4,12 @@ margin-top: 100px;
 margin-bottom: 100px;
 }
 
-#addStudentButton tr td {
+#erreur {
     background-color: red;
+}
+
+#succès {
+    background-color: green;
 }
 
 .table tr:nth-child(even){

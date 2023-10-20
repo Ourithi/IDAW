@@ -33,22 +33,39 @@
 
     
     $(document).ready( function () {
-        getUsersAjax();
+        defTable();
         //let table = new DataTable('#StudentsTable');
     } );
 
 
-    function defTable(users){
+    function defTable(){
         $('#StudentsTable').DataTable({
-            data:users,
+            ajax: {
+            url: 'http://localhost/IDAW/TP4/exo5/users.php', // Replace with your API endpoint URL
+            dataSrc: ''
+            },
+            responsive: true,
             columns: [
                 {data:'id'},
                 {data:'name'},
-                {data:'email'}
+                {data:'email'},
+                {
+                data: null,
+                render: function(data, type, row) {
+                    return '<button onclick="editData(' + data.id + ')">Edit</button>' +
+                           '<button id=delRow onclick="delAjax(' + data.id + ');delRow(this)">Delete</button>';
+                }
+                }   
             ]
         });
+        
+        
     };
-        // When the button is clicked
+    function delRow(button) {
+        let row = button.parentNode.parentNode;
+        row.remove();
+        };
+
     function ajoutAjax (user,email) {
         
         $('#addStudentButton > tr > td').remove();
@@ -81,9 +98,7 @@
         });
     };
 
-    function delAjax(button){
-        let cellId=button.parentNode.parentNode.cells[0];
-        let idVal=cellId.innerHTML;
+    function delAjax(idVal){
         var formData = {
             id: idVal
         };
@@ -95,12 +110,12 @@
             data: jsonData,
             contentType: 'application/json',
             success: function (data) {
-                $("#addStudentButton").append(`<tr><td id=succès>Succès</td></tr>`);
+                //$("#addStudentButton").append(`<tr><td id=succès>Succès</td></tr>`);
 
             },
             error: function (xhr, status, error) {
                 // Handle errors here
-                $("#addStudentButton").append(`<tr><td id=erreur>Une erreur est survenue</td></tr>`);
+                //$("#addStudentButton").append(`<tr><td id=erreur>Une erreur est survenue</td></tr>`);
                 return "erreur";
             }
         });
@@ -167,6 +182,8 @@
                 <th scope="col">Delete/Edit</th>
             </tr>
         </thead>
+        <tbody>
+        </tbody>
         </table>
         <label for="addStudentForm">Ajouter un utilisateur:</label>
         <form id="addStudentForm" action="" onsubmit="onFormSubmit();">

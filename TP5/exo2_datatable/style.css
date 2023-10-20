@@ -1,0 +1,29 @@
+body{ margin-top: 5em; }
+.table {
+margin-top: 100px;
+margin-bottom: 100px;
+}
+
+#erreur {
+    background-color: red;
+}
+
+#succès {
+    background-color: green;
+}
+
+.table tr:nth-child(even){
+    border: rgb(214, 213, 213);
+    background-color: rgb(214, 213, 213);
+}
+
+input[type="checkbox"]
+{
+    display: inline-block;
+    vertical-align:middle;
+}
+
+#inputRemarques{
+    width: 500px;
+    height:50px;
+}

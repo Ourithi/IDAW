@@ -121,9 +121,31 @@
 
         $(document).ready( function () {
             $('#StudentsTable').DataTable();
+            getUsersAjax();
         } );
 
             // When the button is clicked
+
+        function getUsersAjax(){
+            $.ajax({
+                url: 'http://localhost/IDAW/TP4/exo5/users.php',  // Replace with the actual API endpoint URL
+                type: 'GET',
+                success: function (data) {
+                    //console.log(data);
+                    data.forEach(function (user){
+                        id=user.id;
+                        console.log(id);
+                        $("#studentsTableBody").append(`<tr><td>${user.id}</td><td id="user">${user.name}</td><td id="email">${user.email}</td><td><button onclick="editData(this)">Edit</button><button onclick="delete_row(this)">Delete</button></td><td></td></tr>`)
+                    });
+                    
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                }
+            });
+        };
+
         function ajoutAjax (user,email) {
             
             $('#addStudentButton > tr > td').remove();

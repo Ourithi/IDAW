@@ -12,8 +12,10 @@ require_once('db_conn.php');
 $method=$_SERVER['REQUEST_METHOD'];
 switch ($method){
     case 'GET':
-        if(isset($_GET['id'])){
-            $id=$_GET['id'];
+
+        $get=json_decode(file_get_contents('php://input'),true);
+        if(isset($get['id'])){
+            $id=$get['id'];
             $query=$pdo->prepare("SELECT * FROM `users` where `id` =".$id);
             $success=$query->execute();
             if($success){

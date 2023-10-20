@@ -12,19 +12,8 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "user",
-							"value": "test_api",
-							"type": "text"
-						},
-						{
-							"key": "email",
-							"value": "test@api.com",
-							"type": "text"
-						}
-					]
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": \"modif_post\",\r\n    \"email\": \"modif@post.com\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost/IDAW/TP4/exo5/users.php",
@@ -115,9 +104,16 @@
 		},
 		{
 			"name": "http://localhost/IDAW/TP4/exo5/user.php?id=1",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":\"1\"\r\n}"
+				},
 				"url": {
 					"raw": "http://localhost/IDAW/TP4/exo5/user.php?id=1",
 					"protocol": "http",

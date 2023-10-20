@@ -35,9 +35,10 @@ if($_SERVER['REQUEST_METHOD']== 'GET'){
 
 elseif($_SERVER['REQUEST_METHOD']== 'POST'){
 
-    if(isset($_POST['user']) && isset($_POST['email'])){
-        $user=$_POST['user'];
-        $email=$_POST['email'];
+    $post=json_decode(file_get_contents('php://input'),true);
+    if(isset($post['user']) && isset($post['email'])){
+        $user=$post['user'];
+        $email=$post['email'];
         $query=$pdo->prepare('INSERT INTO `users`(`name`, `email`) VALUES ("'.$user.'","'.$email.'")');
         $success=$query->execute();
         if($success){

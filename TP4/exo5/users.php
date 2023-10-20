@@ -5,6 +5,7 @@ header("Access-Control-Allow-Headers: access");
 header("Access-Control-Allow-Methods: GET,POST,PUT,DELETE");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
+header("Cache-Control: no-cache");
 
 require_once('config.php');
 require_once('db_conn.php');

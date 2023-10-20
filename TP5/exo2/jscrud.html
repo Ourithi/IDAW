@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset='utf-8'>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+        <title>tabletest</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" crossorigin="anonymous">
+        <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <table class="table" id="StudentsTable">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Delete/Edit</th>
+            </tr>
+        </thead>
+        <tbody id="studentsTableBody">
+        </tbody>
+        </table>
+        <label for="addStudentForm">Ajouter un utilisateur:</label>
+        <form id="addStudentForm" action="" onsubmit="onFormSubmit();">
+            <div class="form-group row">
+                <label for="inputUser" class="col-sm-2 col-form-label">Username*</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputUser" >
+                </div>
+                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-3">
+                    <input type="text" class="form-control" id="inputEmail" >
+                </div>
+            <br>
+            <br>
+            <div class="form-group row">
+                <span class="col-sm-2"></span>
+                <div class="col-sm-2" id="addStudentButton">
+                    <button id=ajoutUser type="submit" class="btn btn-primary form-control">Ajouter</button>
+                </div>
+            </div>
+            <div id="response"></div>
+
+        </form>
+        <script>
+            let erreur = false;
+            function onFormSubmit() {
+                // prevent the form to be sent to the server
+                event.preventDefault();
+                let user = $("#inputUser").val();
+                let email = $("#inputEmail").val();
+                if (user != ""){
+                    ajoutAjax(user,email); //vaut le nouvel id si succès, vaut false si al requête échoue
+                    erreur = false;    
+
+                }
+                else if (!erreur){
+                    // $("#addStudentButton > tr").empty();
+                    $("#addStudentButton").append(`<tr><td>Le champ user doit être rempli!</td></tr>`);
+                    erreur = true;
+                    //console.log(erreur);
+                }
+            }
+            function editData(button) { 
+            
+            // Get the parent row of the clicked button 
+            let row = button.parentNode.parentNode; 
+            
+            // Get the cells within the row 
+            let id = row.cells[0]; 
+            let user = row.cells[1]; 
+            let email = row.cells[2]; 
+            
+            // Prompt the user to enter updated values 
+            let nameInput = 
+                prompt("Modifier le user:", 
+                    user.innerHTML); 
+            let emailInput = 
+                prompt("Modifier le email:", 
+                    email.innerHTML); 
+            
+            // Update the cell contents with the new values 
+            user.innerHTML = nameInput; 
+            email.innerHTML = emailInput; 
+        }
+        function delete_row(button){
+            let row = button.parentNode.parentNode;
+            row.remove();
+        }
+
+        $(document).ready( function () {
+            $('#StudentsTable').DataTable();
+        } );
+
+            // When the button is clicked
+        function ajoutAjax (user,email) {
+            
+            $('#addStudentButton > tr > td').remove();
+            $('#addStudentButton > tr ').remove();
+            var formData = {
+                user: $("#inputUser").val(),
+                email: $("#inputEmail").val()
+            };
+            var jsonData = JSON.stringify(formData);
+            //console.log(jsonData);
+
+
+            $.ajax({
+                url: 'http://localhost/IDAW/TP4/exo5/users.php',  // Replace with the actual API endpoint URL
+                type: 'POST',
+                data: jsonData,
+                contentType: 'application/json',
+                success: function (data) {
+                    let id = data.id;
+                    console.log(data);
+                    console.log(data.id);
+                    $("#studentsTableBody").append(`<tr><td>${id}</td><td id="user">${user}</td><td id="email">${email}</td><td><button onclick="editData(this)">Edit</button><button onclick="delete_row(this)">Delete</button></td><td></td></tr>`);
+
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors here
+                    $("#addStudentButton").append(`<tr><td>Une erreur est survenue</td></tr>`);
+                    return "erreur";
+                }
+            });
+        };
+        </script>
+    </body>
+</html>

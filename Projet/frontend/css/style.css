@@ -71,6 +71,15 @@
 .user-profile .profile-info {
     margin: 10px 0;
 }
+.user-profile .profile-info p {
+    text-align: center;
+}
+.user-profile .profile-info {
+    text-align: center;
+}
+.user-profile .profile-info div{
+    text-align: center;
+}
 
 .user-profile p {
     margin: 0;

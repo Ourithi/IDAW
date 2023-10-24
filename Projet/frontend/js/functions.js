@@ -27,7 +27,7 @@ function dispUser(idVal){
             document.getElementById("poids").innerHTML = "<strong>Poids:</strong>"+user["poids"]+" kg";
             document.getElementById("age").innerHTML = "<strong>Age:</strong>"+user["age"]+ " ans";
             document.getElementById("sexe").innerHTML = "<strong>Sexe:</strong>"+user["sexe"];
-            console.log(user["name"]);
+            return(Array(user["name"]),user["taille"],user["poids"],user["age"],user);
         },
         error: function (xhr, status, error) {
             // Handle errors here
@@ -35,4 +35,12 @@ function dispUser(idVal){
         }
     });
     
+}
+
+function activateEdit(){
+    document.getElementById("name").innerHTML = "<strong>Nom:</strong><input type=text value ='"+name+"'>";
+    document.getElementById("taille").innerHTML = "<strong>Taille:</strong><input type=number value ='"+taille+"'>";
+    document.getElementById("poids").innerHTML = "<strong>Poids:</strong><input type=number value ='"+poids+"'>";
+    document.getElementById("age").innerHTML = "<strong>Age:</strong><input type=text value ='"+name+"'>";
+    document.getElementById("sexe").innerHTML = "<strong>Sexe:</strong>"+user["sexe"];
 }

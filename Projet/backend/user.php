@@ -84,7 +84,6 @@ switch($method){
     case 'PUT':
 
         $put=json_decode(file_get_contents('php://input'),true);
-
         if(isset($put['id'])){
             $id=$put['id'];
             $name=$put['name'];
@@ -93,7 +92,7 @@ switch($method){
             $age=$put['age'];
             $sexe=$put['sexe'];
 
-            $query=$pdo->prepare('UPDATE `users` SET `name`="'.$name.'",`email`="'.$email.'" WHERE `id`="'.$id.'"');
+            $query=$pdo->prepare('UPDATE `users` SET `sexe`="'.$sexe.'",`name`="'.$name.'",`taille`="'.$taille.'",`poids`="'.$poids.'",`age`="'.$age.'" WHERE `id`="'.$id.'"');
             $success=$query->execute();
             if($success){
                 $query=$pdo->prepare('SELECT * FROM `users`WHERE `id`="'.$id.'"');
@@ -103,7 +102,10 @@ switch($method){
                     $user=array(
                         "id"=> $user->id,
                         "name"=> $user->name,
-                        "email"=>$user->email
+                        "taille"=>$user->taille,
+                        "age"=>$user->age,
+                        "poids"=>$user->poids,
+                        "sexe"=>$user->sexe
                     );
                     echo json_encode($user);
                     http_response_code(200);

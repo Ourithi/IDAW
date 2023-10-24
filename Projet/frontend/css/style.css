@@ -50,3 +50,38 @@
 .login-form-container button:active {
     background-color: #004099;
 }
+
+/* Scope styles to the user profile */
+.user-profile {
+    background-color: #fff;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    text-align: left;
+}
+
+.user-profile h2 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.user-profile .profile-info {
+    margin: 10px 0;
+}
+
+.user-profile p {
+    margin: 0;
+    line-height: 1.5;
+}
+
+.user-profile p strong {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.user-profile p:last-child {
+    margin-bottom: 0;
+}

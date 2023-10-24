@@ -15,32 +15,8 @@ switch($method){
     case 'GET':
         //on initialise une liste d'user vide
         $get=json_decode(file_get_contents('php://input'),true);
-        //check params pour login
-        if(isset($get['name']) && isset($get['pwd'])){
-            $name=$get['name'];
-            $pwd=$get['pwd'];
-            $query=$pdo->prepare('SELECT `id` from `users` where `name`="'.$name.'"and `pwd`="'.$pwd.'"');
-            $success=$query->execute();
-            //check succès query
-            if ($success){
-                $id=$query->fetch(PDO::FETCH_OBJ);
-                //check match user/pwd
-                if ($id){
-                    http_response_code(200);
-                    echo json_encode(array("message"=> "Success"));
-                }
-                else{
-                    http_response_code(200);
-                    echo json_encode(array("message"=> "Mauvais nom d'utilisateur/mot de passe"));
-                }
-            }
-            else{
-                http_response_code(500);
-                echo json_encode(array("message"=> "Internal server error"));
-            }
-        }
-        elseif (isset($get['id'])){
-            $id=$get['id'];
+        if (isset($_GET['id'])){
+            $id=$_GET['id'];
             $query=$pdo->prepare('SELECT * from `users` where `id`="'.$id.'"');
             $success=$query->execute();
             if ($success){
@@ -51,7 +27,7 @@ switch($method){
                 }
                 else{
                     http_response_code(400);
-                    echo json_encode(array("message"=> "Bad request"));
+                    echo json_encode(array("message"=> "User doesn't exist"));
                 }
 
             }
@@ -109,10 +85,14 @@ switch($method){
 
         $put=json_decode(file_get_contents('php://input'),true);
 
-        if(isset($put['id']) && isset($put['name']) && isset($put['email'])){
+        if(isset($put['id'])){
             $id=$put['id'];
             $name=$put['name'];
-            $email=$put['email'];
+            $taille=$put['taille'];
+            $poids=$put['poids'];
+            $age=$put['age'];
+            $sexe=$put['sexe'];
+
             $query=$pdo->prepare('UPDATE `users` SET `name`="'.$name.'",`email`="'.$email.'" WHERE `id`="'.$id.'"');
             $success=$query->execute();
             if($success){

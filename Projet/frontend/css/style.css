@@ -106,3 +106,29 @@ table tr:nth-child(even){
     border: rgb(214, 213, 213);
     background-color: rgb(214, 213, 213);
 }
+
+#barre_top ul li a:hover{
+    background-color: rgb(33, 30, 210);
+}
+
+#barre_top ul li{
+    list-style-type:none;
+  }
+
+#barre_top ul li a{
+    display: inline-block;
+    text-decoration: none;
+    text-align: middle;
+    color:black;
+    background-color: aqua;
+    margin-left: 1em;
+    padding: 0.5em;
+    border: 2px solid black;
+  }
+
+#barre_top ul{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: left;
+    padding-left: 0px;
+}

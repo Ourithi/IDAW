@@ -1,6 +1,6 @@
 <?php require_once('header.html')?>
 <script>
-    window.onload= function(){dispUser(1);
+    window.onload= function(){dispUser(0);
     };
 </script>
 

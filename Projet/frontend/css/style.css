@@ -94,3 +94,15 @@
 .user-profile p:last-child {
     margin-bottom: 0;
 }
+
+#AlimentsTable_wrapper{
+    background-color: white;
+}
+table {
+    background-color: white;
+}
+
+table tr:nth-child(even){
+    border: rgb(214, 213, 213);
+    background-color: rgb(214, 213, 213);
+}

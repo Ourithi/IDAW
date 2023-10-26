@@ -61,3 +61,53 @@ function activateEdit(){
     
 }
 
+function getAlimentsAjax(){
+    let aliments = new Array();
+    $.ajax({
+        url: prefix+'aliments.php',  
+        type: 'GET',
+        success: function (data) {
+            //console.log(data);
+            data.forEach(function (aliment){
+                aliments.push(aliment);
+                //return users;
+                
+                //$("#studentsTableBody").append(`<tr><td>${user.id}</td><td id="user">${user.name}</td><td id="email">${user.email}</td><td><button onclick="editData(this)">Edit</button><button onclick="delete_row(this)">Delete</button></td><td></td></tr>`)
+            });
+            console.log(aliments[0]);
+            defTable(aliments);
+            
+
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+        }
+    });
+};
+
+function defTable(){
+    $('#AlimentsTable').DataTable({
+        ajax: {
+        url: prefix+'aliments.php', 
+        dataSrc: ''
+        },
+        responsive: true,
+        columns: [
+            {data:'NOM_ALIMENT'},
+            {data:'ENERGIE'},
+            {data:'LIPIDES'},
+            {data:'GLUCIDES'},
+            {data:'SUCRE'},
+            {data:'FIBRES'},
+            {data:'PROTEINES'},
+            {data:'SEL'},
+            {
+            data: null,
+            render: function(data, type, row) {
+                return '<button onclick="editData(' + data.id + ')">Edit</button>' +
+                       '<button id=delRow onclick="delAjax(' + data.id + ');delRow(this)">Delete</button>';
+            }
+            }   
+        ]
+    });
+}

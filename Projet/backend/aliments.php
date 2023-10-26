@@ -8,7 +8,7 @@ header('Content-Type: application/json');
 header("Cache-Control: no-cache");
 
 require_once('config.php');
-require_once('db_conn.php');
+require_once('init_pdo.php');
 $method=$_SERVER['REQUEST_METHOD'];
 
 switch($method){
@@ -16,10 +16,10 @@ switch($method){
         //on initialise une liste d'aliment vide
         $aliments=array();
         if(isset($_GET['id_aliment'])){
-            $query=$pdo->prepare('select * from `aliments` WHERE ID_ALIMENT="'.$_GET['id_aliment'].'"');
+            $query=$pdo->prepare('select * from `aliment` WHERE `ID_ALIMENT`="'.$_GET['id_aliment'].'"');
         }
         else{
-            $query=$pdo->prepare('select * from `aliments`');
+            $query=$pdo->prepare('select * from `aliment`');
         }
         
         $success=$query->execute();
@@ -27,12 +27,7 @@ switch($method){
         if($success){
             //on loop sur toutes les lignes du tableau et on fait un array par aliment qu'on met dans un array qui les contient tous
             while($ligne=($query->fetch(PDO::FETCH_OBJ))){
-                $aliment=array(
-                    "id"=> $ligne->id,
-                    "name"=> $ligne->name,
-                    "email"=>$ligne->email
-                );
-                array_push($aliments,$aliment);
+                array_push($aliments,$ligne);
             }
             http_response_code(200);
             echo json_encode($aliments);
@@ -41,6 +36,7 @@ switch($method){
             http_response_code(500);
             echo json_encode(array("message"=> "Internal server error"));
         }
+        break;
 
 
     case 'POST':
@@ -78,6 +74,7 @@ switch($method){
             http_response_code(400);
             echo json_encode(array("message"=> "Bad request"));
         }
+        break;
 
 
     case 'PUT':
@@ -120,6 +117,7 @@ switch($method){
             http_response_code(400);
             echo json_encode(array("message"=> "Bad request"));
         }
+        break;
 
     case 'DELETE':
         $del=json_decode(file_get_contents('php://input'), true);
@@ -142,8 +140,10 @@ switch($method){
             http_response_code(400);
             echo json_encode(array("message"=> "Bad request"));
         }
+        break;
 
-    case default:
+    default:
             http_response_code(405);
             echo json_encode(array("message"=> "Method not allowed"));
+            break;
 }

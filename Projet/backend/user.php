@@ -15,9 +15,9 @@ switch($method){
     case 'GET':
         //on initialise une liste d'user vide
         $get=json_decode(file_get_contents('php://input'),true);
-        if (isset($_GET['id'])){
-            $id=$_GET['id'];
-            $query=$pdo->prepare('SELECT * from `users` where `id`="'.$id.'"');
+        if (isset($_GET['id_user'])){
+            $id=$_GET['id_user'];
+            $query=$pdo->prepare('SELECT * from `user` JOIN `activite` ON user.ID_ACTIVITE = activite.ID_ACTIVITE  where `id_user`="'.$id.'"');
             $success=$query->execute();
             if ($success){
                 $user=$query->fetch(PDO::FETCH_OBJ);
@@ -54,10 +54,10 @@ switch($method){
             $poids=$post['poids'];
             $age=$post['age'];
             $sexe=$post['sexe'];
-            $query=$pdo->prepare('INSERT INTO `users`( `name`, `pwd`, `taille`, `poids`, `age`, `sexe`) VALUES ("'.$name.'","'.$pwd.'","'.$taille.'","'.$poids.'","'.$age.'","'.$sexe.'")');
+            $query=$pdo->prepare('INSERT INTO `user`( `name`, `pwd`, `taille`, `poids`, `age`, `sexe`) VALUES ("'.$name.'","'.$pwd.'","'.$taille.'","'.$poids.'","'.$age.'","'.$sexe.'")');
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT max(id) AS id FROM `users`');
+                $query=$pdo->prepare('SELECT max(id) AS id FROM `user`');
                 $success=$query->execute();
                 if($success){
                     $id=$query->fetch(PDO::FETCH_OBJ);
@@ -85,17 +85,16 @@ switch($method){
 
         $put=json_decode(file_get_contents('php://input'),true);
         if(isset($put['id'])){
-            $id=$put['id'];
-            $name=$put['name'];
-            $taille=$put['taille'];
-            $poids=$put['poids'];
-            $age=$put['age'];
-            $sexe=$put['sexe'];
+            $queryString = "UPDATE `user` SET";
+            foreach ($put as $key => $value) {
+                $queryString = $queryString."`".$key."`='".$value."',"; // Ajoute les valeurs a modifier a la query
+                $queryString = substr($queryString, 0, -1); //on enlève la dernière virgule
+            }
 
-            $query=$pdo->prepare('UPDATE `users` SET `sexe`="'.$sexe.'",`name`="'.$name.'",`taille`="'.$taille.'",`poids`="'.$poids.'",`age`="'.$age.'" WHERE `id`="'.$id.'"');
+            $query=$pdo->prepare($queryString);
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT * FROM `users`WHERE `id`="'.$id.'"');
+                $query=$pdo->prepare('SELECT * FROM `user`WHERE `id`="'.$id.'"');
                 $success=$query->execute();
                 if($success){
                     $user=$query->fetch(PDO::FETCH_OBJ);
@@ -133,7 +132,7 @@ switch($method){
         $del=json_decode(file_get_contents('php://input'), true);
         if(isset($del['id'])){
             $id=$del['id'];
-            $query=$pdo->prepare("DELETE FROM `users` WHERE `id`=".$id);
+            $query=$pdo->prepare("DELETE FROM `user` WHERE `id`=".$id);
             $success=$query->execute();
             if($success){
                 http_response_code(200);

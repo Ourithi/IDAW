@@ -1,11 +1,6 @@
 <?php require_once('header.html')?>
 <script>
-    window.onload= function(){let user= dispUser(1);
-        let name = user[0];
-        let taille= user[1];
-        let poids= user[2];
-        let age= user[3];
-        let sexe= user [4]
+    window.onload= function(){dispUser(1);
     };
 </script>
 
@@ -19,6 +14,7 @@
                 <p id="poids"><strong>Weight:</strong> 75 kg</p>
                 <p id="age"><strong>Age:</strong> 30 years</p>
                 <p id="sexe"><strong>Gender:</strong> Male</p>
+                <p id="activité"><strong>Activité:</strong> Rarely</p>
                 <br>
                 <div id="buttonWrapper">
                     <input type="submit" value="Modifier">

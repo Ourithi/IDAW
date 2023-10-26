@@ -27,6 +27,13 @@
                 </select>
             </div>
             <div class="form-group">
+                <label for="activite">Fréquence d'exercice:</label>
+                <select name="activite" id="activite">
+                    <option value="1">Pas ou peu d'exercice</option>
+                    <option value="2">F</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="password">Mot de passe:</label>
                 <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
             </div>

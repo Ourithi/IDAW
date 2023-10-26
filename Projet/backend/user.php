@@ -87,25 +87,24 @@ switch($method){
         if(isset($put['id'])){
             $queryString = "UPDATE `user` SET";
             foreach ($put as $key => $value) {
-                $queryString = $queryString."`".$key."`='".$value."',"; // Ajoute les valeurs a modifier a la query
-                $queryString = substr($queryString, 0, -1); //on enlève la dernière virgule
+                if($key !='id'){
+                    $queryString = $queryString."`".$key."`='".$value."' ,"; // Ajoute les valeurs a modifier a la query
+                }
+                else{
+                    $id=$value;
+                }
             }
+            $queryString = substr($queryString, 0, -1); //on enlève la dernière virgule
+            $queryString=$queryString."WHERE `ID_USER`=".$id;
+            //echo json_encode($queryString);
 
             $query=$pdo->prepare($queryString);
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT * FROM `user`WHERE `id`="'.$id.'"');
+                $query=$pdo->prepare('SELECT * FROM `user`WHERE `ID_USER`="'.$id.'"');
                 $success=$query->execute();
                 if($success){
                     $user=$query->fetch(PDO::FETCH_OBJ);
-                    $user=array(
-                        "id"=> $user->id,
-                        "name"=> $user->name,
-                        "taille"=>$user->taille,
-                        "age"=>$user->age,
-                        "poids"=>$user->poids,
-                        "sexe"=>$user->sexe
-                    );
                     echo json_encode($user);
                     http_response_code(200);
 

@@ -15,7 +15,13 @@ switch($method){
     case 'GET':
         //on initialise une liste d'aliment vide
         $aliments=array();
-        $query=$pdo->prepare('select * from `aliments`');
+        if(isset($_GET['id_aliment'])){
+            $query=$pdo->prepare('select * from `aliments` WHERE ID_ALIMENT="'.$_GET['id_aliment'].'"');
+        }
+        else{
+            $query=$pdo->prepare('select * from `aliments`');
+        }
+        
         $success=$query->execute();
 
         if($success){

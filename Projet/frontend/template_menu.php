@@ -15,6 +15,6 @@
         }
         //echo "<li><img src=en_flag.png href='http://localhost/IDAW/SitePro/v3/'.$chgt.'/index.php?lang='.$chgt.'&page='.$currentPageId></li>"
         echo "</ul>";
-        echo "</nav";
+        echo "</nav>";
     }
 ?>

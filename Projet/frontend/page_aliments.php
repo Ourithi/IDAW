@@ -1,7 +1,7 @@
 <?php require_once('header.html');
     require_once("template_menu.php");
     $currentPageId = 'page_aliments';
-    //renderMenuToHTML($currentPageId);
+    renderMenuToHTML($currentPageId);
 ?>
 
 <table class="table" id="AlimentsTable">

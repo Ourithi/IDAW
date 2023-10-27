@@ -47,17 +47,18 @@ switch($method){
     case 'POST':
 
         $post=json_decode(file_get_contents('php://input'),true);
-        if(isset($post['name']) && isset($post['pwd']) && isset($post['taille']) && isset($post['poids']) && isset($post['age']) && isset($post['sexe'])){
+        if(isset($post['name']) && isset($post['pwd']) && isset($post['taille']) && isset($post['poids']) && isset($post['age']) && isset($post['sexe']) && isset($post['id_activite'])){
             $name=$post['name'];
             $pwd=$post['pwd'];
             $taille=$post['taille'];
             $poids=$post['poids'];
             $age=$post['age'];
             $sexe=$post['sexe'];
-            $query=$pdo->prepare('INSERT INTO `user`( `name`, `pwd`, `taille`, `poids`, `age`, `sexe`) VALUES ("'.$name.'","'.$pwd.'","'.$taille.'","'.$poids.'","'.$age.'","'.$sexe.'")');
+            $activite=$post['id_activite'];
+            $query=$pdo->prepare('INSERT INTO `user`( `name`, `pwd`, `taille`, `poids`, `age`, `sexe`,`id_activite`) VALUES ("'.$name.'","'.$pwd.'","'.$taille.'","'.$poids.'","'.$age.'","'.$sexe.'","'.$activite.'")');
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT max(id) AS id FROM `user`');
+                $query=$pdo->prepare('SELECT max(id_user) AS id_user FROM `user`');
                 $success=$query->execute();
                 if($success){
                     $id=$query->fetch(PDO::FETCH_OBJ);
@@ -131,7 +132,7 @@ switch($method){
         $del=json_decode(file_get_contents('php://input'), true);
         if(isset($del['id'])){
             $id=$del['id'];
-            $query=$pdo->prepare("DELETE FROM `user` WHERE `id`=".$id);
+            $query=$pdo->prepare("DELETE FROM `user` WHERE `ID_USER`=".$id);
             $success=$query->execute();
             if($success){
                 http_response_code(200);

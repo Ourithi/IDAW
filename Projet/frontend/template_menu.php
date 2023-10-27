@@ -7,10 +7,10 @@
         echo "<ul>";
         foreach($mymenu as $pageId) {
             if($currentPageId==$pageId) {
-                echo '<li><a id=currentpage href="'._prefix.$pageId.'">'.$pageId.'</a></li>';
+                echo '<li><a id=currentpage href="'._prefixFront.$pageId.'.php">'.$pageId.'</a></li>';
             }
             else {
-                echo '<li><a href="'._prefix.$pageId.'">'.$pageId.'</a></li>';
+                echo '<li><a href="'._prefixFront.$pageId.'.php">'.$pageId.'</a></li>';
             }
         }
         //echo "<li><img src=en_flag.png href='http://localhost/IDAW/SitePro/v3/'.$chgt.'/index.php?lang='.$chgt.'&page='.$currentPageId></li>"

@@ -1,6 +1,10 @@
-<?php require_once('header.html')?>
+<?php require_once('header.html');
+    require_once("template_menu.php");
+    $currentPageId = 'profile';
+    renderMenuToHTML($currentPageId);
+?>
 <script>
-    window.onload= function(){dispUser(0);
+    window.onload= function(){dispUser(1);
     };
 </script>
 
@@ -8,7 +12,7 @@
     <div class="user-profile">
         <h2>Profil</h2>
         <div class="profile-info">
-            <form id="activate_edit_user" onsubmit="return activate_edit();">
+            <form id="activate_edit_user" onsubmit="activate_edit(1);">
                 <p id="name"><strong>Name:</strong></p>
                 <p id="taille"><strong>Height:</strong> 180 cm</p>
                 <p id="poids"><strong>Weight:</strong> 75 kg</p>

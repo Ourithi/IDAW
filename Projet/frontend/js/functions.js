@@ -21,7 +21,7 @@ function dispUser(idVal){
         type: 'GET', 
         dataType: "json",
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             document.getElementById("name").innerHTML = "<strong>Nom:</strong>"+data["NAME"];
             document.getElementById("taille").innerHTML = "<strong>Taille:</strong>"+data["TAILLE"]+" cm";
             document.getElementById("poids").innerHTML = "<strong>Poids:</strong>"+data["POIDS"]+" kg";
@@ -38,7 +38,8 @@ function dispUser(idVal){
     
 }
 
-function activateEdit(){
+function activateEdit(idVal){
+    event.preventDefault();
     $.ajax({
         url: prefix + 'user.php?id_user=' + idVal,  
         type: 'GET', 

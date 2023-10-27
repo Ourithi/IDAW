@@ -87,24 +87,24 @@ switch($method){
     case 'PUT':
 
         $put=json_decode(file_get_contents('php://input'),true);
-        if(isset($put['id'])){
-            $queryString = "UPDATE `user` SET";
+        if(isset($put['id_repas'])){
+            $queryString = "UPDATE `repas` SET";
             foreach ($put as $key => $value) {
-                if($key !='id'){
+                if($key !='id_repas'){
                     $queryString = $queryString."`".$key."`='".$value."' ,"; // Ajoute les valeurs a modifier a la query
                 }
                 else{
-                    $id=$value;
+                    $id_repas=$value;
                 }
             }
             $queryString = substr($queryString, 0, -1); //on enlève la dernière virgule
-            $queryString=$queryString."WHERE `ID_USER`=".$id;
+            $queryString=$queryString."WHERE `ID_REPAS`=".$id_repas;
             //echo json_encode($queryString);
 
             $query=$pdo->prepare($queryString);
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT * FROM `user`WHERE `ID_USER`="'.$id.'"');
+                $query=$pdo->prepare('SELECT * FROM `repas`WHERE `ID_REPAS`="'.$id_repas.'"');
                 $success=$query->execute();
                 if($success){
                     $user=$query->fetch(PDO::FETCH_OBJ);
@@ -132,14 +132,14 @@ switch($method){
 
     case 'DELETE':
         $del=json_decode(file_get_contents('php://input'), true);
-        if(isset($del['id'])){
-            $id=$del['id'];
-            $query=$pdo->prepare("DELETE FROM `user` WHERE `ID_USER`=".$id);
+        if(isset($del['id_repas'])){
+            $id_repas=$del['id_repas'];
+            $query=$pdo->prepare("DELETE FROM `repas` WHERE `ID_repas`=".$id_repas);
             $success=$query->execute();
             if($success){
                 http_response_code(200);
                 echo json_encode(array(
-                    'message'=> "L'utilisateur a bien été supprimé")
+                    'message'=> "Le repas a bien été supprimé")
                 );
             }
             else{

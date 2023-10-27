@@ -91,24 +91,28 @@ switch($method){
     case 'PUT':
 
         $put=json_decode(file_get_contents('php://input'),true);
+        if(isset($put['id_aliment'])){
+            $queryString = "UPDATE `aliment` SET";
+            foreach ($put as $key => $value) {
+                if($key !='id_aliment'){
+                    $queryString = $queryString."`".$key."`='".$value."' ,"; // Ajoute les valeurs a modifier a la query
+                }
+                else{
+                    $id_aliment=$value;
+                }
+            }
+            $queryString = substr($queryString, 0, -1); //on enlève la dernière virgule
+            $queryString=$queryString."WHERE `ID_ALIMENT`=".$id_aliment;
+            //echo json_encode($queryString);
 
-        if(isset($put['id']) && isset($put['name']) && isset($put['email'])){
-            $id=$put['id'];
-            $name=$put['name'];
-            $email=$put['email'];
-            $query=$pdo->prepare('UPDATE `aliments` SET `name`="'.$name.'",`email`="'.$email.'" WHERE `id`="'.$id.'"');
+            $query=$pdo->prepare($queryString);
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT * FROM `aliments`WHERE `id`="'.$id.'"');
+                $query=$pdo->prepare('SELECT * FROM `aliment`WHERE `ID_ALIMENT`="'.$id_aliment.'"');
                 $success=$query->execute();
                 if($success){
-                    $aliment=$query->fetch(PDO::FETCH_OBJ);
-                    $aliment=array(
-                        "id"=> $aliment->id,
-                        "name"=> $aliment->name,
-                        "email"=>$aliment->email
-                    );
-                    echo json_encode($aliment);
+                    $user=$query->fetch(PDO::FETCH_OBJ);
+                    echo json_encode($user);
                     http_response_code(200);
 
                 }
@@ -132,14 +136,14 @@ switch($method){
 
     case 'DELETE':
         $del=json_decode(file_get_contents('php://input'), true);
-        if(isset($del['id'])){
-            $id=$del['id'];
-            $query=$pdo->prepare("DELETE FROM `aliments` WHERE `id`=".$id);
+        if(isset($del['id_aliment'])){
+            $id_aliment=$del['id_aliment'];
+            $query=$pdo->prepare("DELETE FROM `aliment` WHERE `id_aliment`=".$id_aliment);
             $success=$query->execute();
             if($success){
                 http_response_code(200);
                 echo json_encode(array(
-                    'message'=> "L'utilisateur a bien été supprimé")
+                    'message'=> "L'aliment a bien été supprimé")
                 );
             }
             else{

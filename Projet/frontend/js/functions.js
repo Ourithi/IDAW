@@ -46,12 +46,12 @@ function activateEditUser(idVal){
         dataType: "json",
         success: function (data) {
             console.log(data);
-            document.getElementById("name").innerHTML = '<strong>Nom:</strong><input type="text" id="name" name="name" value="'+data["NAME"]+'">';
-            document.getElementById("taille").innerHTML = '<strong>Taille:</strong><input type="number" id="taille" name="taille" value="'+data["TAILLE"]+'">cm';
-            document.getElementById("poids").innerHTML = '<strong>Poids:</strong><input type="number" id="poids" name="poids" value="'+data["POIDS"]+'">kg';
-            document.getElementById("age").innerHTML = '<strong>Age:</strong><input type="number" id="age" name="age" value="'+data["AGE"]+'">ans';
-            document.getElementById("activité").innerHTML ='<strong>Activité:</strong><select name="activite" id="activite"><option value="1">Pas ou peu d\'exercice</option><option value="2">1 à 3 fois par semaine</option><option value="3">3 à 5 fois par semaine</option><option value="4">Plus de 5 fois par semaine</option></select>';
-            document.getElementById("button_wrapper").innerHTML='<input type="submit" value="Valider" onclick="sendEditUser('+idVal+')";>'
+            document.getElementById("name").innerHTML = '<strong>Nom:</strong><input type="text" id="slot_name" name="name" value="'+data["NAME"]+'">';
+            document.getElementById("taille").innerHTML = '<strong>Taille:</strong><input type="number" id="slot_taille" name="taille" value="'+data["TAILLE"]+'">cm';
+            document.getElementById("poids").innerHTML = '<strong>Poids:</strong><input type="number" id="slot_poids" name="poids" value="'+data["POIDS"]+'">kg';
+            document.getElementById("age").innerHTML = '<strong>Age:</strong><input type="number" id="slot_age" name="age" value="'+data["AGE"]+'">ans';
+            document.getElementById("activité").innerHTML ='<strong>Activité:</strong><select name="slot_activite" id="slot_activite"><option value="1">Pas ou peu d\'exercice</option><option value="2">1 à 3 fois par semaine</option><option value="3">3 à 5 fois par semaine</option><option value="4">Plus de 5 fois par semaine</option></select>';
+            document.getElementById("buttonWrapper").innerHTML='<input type="submit" value="Valider" onclick="sendEditUser('+idVal+')";>'
         },
         error: function (xhr, status, error) {
             // Handle errors here
@@ -114,35 +114,36 @@ function defTable(){
 
 function sendEditUser(idVal){
     event.preventDefault();
-    var name = document.getElementById("name").value;
-    var taille = document.getElementById("taille").value;
-    var poids = document.getElementById("poids").value;
-    var age = document.getElementById("age").value;
-    var activite = document.getElementById("activite").value;
+    var name = $('#slot_name').val();
+    var taille = $('#slot_taille').val();
+    var poids = $('#slot_poids').val();
+    var age = $('#slot_age').val();
+    var id_activite = $('#slot_activite').val();
 
     var data = {
-        id: id,
+        id_user: idVal,
         name: name,
         taille: taille,
         poids: poids,
         age: age,
-        activite: activite
+        id_activite: id_activite
     };
-    $.ajax({
+    //console.log(data);
+     $.ajax({
         url: prefix+ 'user.php',
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify(data),
         success: function(response) {
             dispUser(idVal);
-            document.getElementById("button_wrapper").innerHTML='<input type="submit" value="Valider" onclick="activateEditUser('+idVal+')";>'
-            //console.log(response);
+            document.getElementById("buttonWrapper").innerHTML='<input type="submit" value="Modifier" onclick="activateEditUser('+idVal+')";>'
+            console.log(response);
         },
         error: function(xhr, status, error) {
             // Handle errors here
             console.error('Request failed with status: ' + xhr.status);
         }
-    });
+    }); 
 }
 
 

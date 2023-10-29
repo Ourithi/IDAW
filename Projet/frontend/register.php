@@ -30,7 +30,9 @@
                 <label for="activite">Fréquence d'exercice:</label>
                 <select name="activite" id="activite">
                     <option value="1">Pas ou peu d'exercice</option>
-                    <option value="2">F</option>
+                    <option value="2">1 à 3 fois par semaine</option>
+                    <option value="3">3 à 5 fois par semaine</option>
+                    <option value="4">Plus de 5 fois par semaine</option>
                 </select>
             </div>
             <div class="form-group">

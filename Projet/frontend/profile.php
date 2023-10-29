@@ -12,7 +12,7 @@
     <div class="user-profile">
         <h2>Profil</h2>
         <div class="profile-info">
-            <form id="activate_edit_user" onsubmit="activate_edit(1);">
+            <form id="activate_edit_user">
                 <p id="name"><strong>Name:</strong></p>
                 <p id="taille"><strong>Height:</strong> 180 cm</p>
                 <p id="poids"><strong>Weight:</strong> 75 kg</p>
@@ -21,7 +21,7 @@
                 <p id="activité"><strong>Activité:</strong> Rarely</p>
                 <br>
                 <div id="buttonWrapper">
-                    <input type="submit" value="Modifier">
+                    <input type="submit" value="Modifier" onclick="activateEditUser(1)";>
                 </div>
             </form>
         </div>

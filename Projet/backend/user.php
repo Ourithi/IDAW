@@ -16,11 +16,12 @@ switch($method){
         //on initialise une liste d'user vide
         $get=json_decode(file_get_contents('php://input'),true);
         if (isset($_GET['id_user'])){
-            $id=$_GET['id_user'];
-            $query=$pdo->prepare('SELECT * from `user` JOIN `activite` ON user.ID_ACTIVITE = activite.ID_ACTIVITE  where `id_user`="'.$id.'"');
+            $id_user=$_GET['id_user'];
+            $query=$pdo->prepare('SELECT user.*, activite.nom_activite from `user` INNER JOIN `activite` ON user.ID_ACTIVITE = activite.ID_ACTIVITE  where `id_user`="'.$id_user.'"');
             $success=$query->execute();
             if ($success){
                 $user=$query->fetch(PDO::FETCH_OBJ);
+                //echo json_encode($user);
                 if ($user){
                     echo json_encode($user);
                     http_response_code(200);
@@ -85,24 +86,24 @@ switch($method){
     case 'PUT':
 
         $put=json_decode(file_get_contents('php://input'),true);
-        if(isset($put['id'])){
+        if(isset($put['id_user'])){
             $queryString = "UPDATE `user` SET";
             foreach ($put as $key => $value) {
-                if($key !='id'){
+                if($key !='id_user'){
                     $queryString = $queryString."`".$key."`='".$value."' ,"; // Ajoute les valeurs a modifier a la query
                 }
                 else{
-                    $id=$value;
+                    $id_user=$value;
                 }
             }
             $queryString = substr($queryString, 0, -1); //on enlève la dernière virgule
-            $queryString=$queryString."WHERE `ID_USER`=".$id;
+            $queryString=$queryString."WHERE `ID_USER`=".$id_user;
             //echo json_encode($queryString);
 
             $query=$pdo->prepare($queryString);
             $success=$query->execute();
             if($success){
-                $query=$pdo->prepare('SELECT * FROM `user`WHERE `ID_USER`="'.$id.'"');
+                $query=$pdo->prepare('SELECT * FROM `user`WHERE `ID_USER`="'.$id_user.'"');
                 $success=$query->execute();
                 if($success){
                     $user=$query->fetch(PDO::FETCH_OBJ);

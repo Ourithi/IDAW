@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 29 oct. 2023 à 09:56
+-- Généré le : dim. 29 oct. 2023 à 10:29
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -29,10 +29,20 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `activite`;
 CREATE TABLE IF NOT EXISTS `activite` (
-  `ID_ACTIVITE` int NOT NULL,
+  `ID_ACTIVITE` int NOT NULL AUTO_INCREMENT,
   `NOM_ACTIVITE` varchar(50) NOT NULL,
   PRIMARY KEY (`ID_ACTIVITE`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `activite`
+--
+
+INSERT INTO `activite` (`ID_ACTIVITE`, `NOM_ACTIVITE`) VALUES
+(1, 'rarement'),
+(2, '1 à 3 fois par semaine'),
+(3, '3 à 5 fois par semaine'),
+(4, 'plus de 5 fois par semaine');
 
 -- --------------------------------------------------------
 

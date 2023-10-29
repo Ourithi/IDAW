@@ -27,7 +27,7 @@ function dispUser(idVal){
             document.getElementById("poids").innerHTML = "<strong>Poids:</strong>"+data["POIDS"]+" kg";
             document.getElementById("age").innerHTML = "<strong>Age:</strong>"+data["AGE"]+ " ans";
             document.getElementById("sexe").innerHTML = "<strong>Sexe:</strong>"+data["SEXE"];
-            document.getElementById("activité").innerHTML = "<strong>Activité:</strong>"+data["NOM_ACTIVITE"];
+            document.getElementById("activité").innerHTML = "<strong>Activité:</strong>"+data["nom_activite"];
             //return(Array(data["NAME"]),data["TAILLE"],data["POIDS"],data["AGE"],data["SEXE"]);
         },
         error: function (xhr, status, error) {

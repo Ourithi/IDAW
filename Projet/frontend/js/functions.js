@@ -85,7 +85,7 @@ function getAlimentsAjax(){
     });
 };
 
-function defTable(){
+function defTableAliments(){
     $('#AlimentsTable').DataTable({
         ajax: {
         url: prefix+'aliments.php', 
@@ -146,7 +146,49 @@ function sendEditUser(idVal){
     }); 
 }
 
+function defTableRepas(){
+    
+    $('#RepassTable').DataTable({
+        ajax: {
+        url: prefix+'aliments_repas.php', 
+        dataSrc: ''
+        },
+        responsive: true,
+        columns: [
+            {data:'NOM_ALIMENT'},
+            {data:'ENERGIE'},
+            {data:'LIPIDES'},
+            {data:'GLUCIDES'},
+            {data:'SUCRE'},
+            {data:'FIBRES'},
+            {data:'PROTEINES'},
+            {data:'SEL'},
+            {
+            data: null,
+            render: function(data, type, row) {
+                return '<button onclick="editData(' + data.id + ')">Edit</button>' +
+                       '<button id=delRow onclick="delAjax(' + data.id + ');delRow(this)">Delete</button>';
+            }
+            }   
+        ]
+    });
+}
 
-
+function getRepasAjax(idUser,idRepas){
+    //var formData= {id: idVal};
+    //var jsonData = JSON.stringify(formData);
+        $.ajax({
+            url: prefix + 'repas.php?id_repas=' + idRepas+'&id_user='+idUser,  
+            type: 'GET', 
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (xhr, status, error) {
+                // Handle errors here
+                console.log("erreur",status,error);
+            }
+        });
+    };
 
 

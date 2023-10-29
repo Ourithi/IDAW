@@ -22,4 +22,4 @@
         </tbody>
         </table>
 
-<script>defTable()</script>
+<script>defTableAliments()</script>

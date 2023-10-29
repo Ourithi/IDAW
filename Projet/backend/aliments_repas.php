@@ -17,26 +17,27 @@ switch($method){
         $aliments=array();
         if(isset($_GET['id_repas'])){
             $id_repas=$_GET['id_repas'];
-            $query=$pdo->prepare('SELECT id_aliment, nom_aliment, quantite from `aliment` JOIN `contenir` ON contenir.ID_ALIMENT = aliment.ID_USER where `id_repas`="'.$id_repas.'"');
+            $query=$pdo->prepare('SELECT aliment.id_aliment, nom_aliment, quantite from `aliment` INNER JOIN `contenir` ON contenir.ID_ALIMENT = aliment.ID_ALIMENT where `id_repas`="'.$id_repas.'"');
+            $success=$query->execute();
+
+            if($success){
+                //on loop sur toutes les lignes du tableau et on fait un array par aliment qu'on met dans un array qui les contient tous
+                while($ligne=($query->fetch(PDO::FETCH_OBJ))){
+                    array_push($aliments,$ligne);
+                }
+                http_response_code(200);
+                echo json_encode($aliments);
+            }
+            else{
+                http_response_code(500);
+                echo json_encode(array("message"=> "Internal server error"));
+            }
         }
         else{
-            $query=$pdo->prepare('select * from `aliment`');
+            //$query=$pdo->prepare('select * from `aliment`');
         }
         
-        $success=$query->execute();
 
-        if($success){
-            //on loop sur toutes les lignes du tableau et on fait un array par aliment qu'on met dans un array qui les contient tous
-            while($ligne=($query->fetch(PDO::FETCH_OBJ))){
-                array_push($aliments,$ligne);
-            }
-            http_response_code(200);
-            echo json_encode($aliments);
-        }
-        else{
-            http_response_code(500);
-            echo json_encode(array("message"=> "Internal server error"));
-        }
         break;
 
 

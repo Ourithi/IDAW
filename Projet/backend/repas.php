@@ -13,6 +13,7 @@ $method=$_SERVER['REQUEST_METHOD'];
 
 switch($method){
     case 'GET':
+        //on récupère les repas pour un utilisateur
         $get=json_decode(file_get_contents('php://input'),true);
         if (isset($_GET['id_user'])){
             $id_user=$_GET['id_user'];

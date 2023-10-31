@@ -174,22 +174,6 @@ function defTableRepas(){
     });
 }
 
-function getRepasAjax(idUser,idRepas){
-    //var formData= {id: idVal};
-    //var jsonData = JSON.stringify(formData);
-        $.ajax({
-            url: prefix + 'repas.php?id_repas=' + idRepas+'&id_user='+idUser,  
-            type: 'GET', 
-            dataType: "json",
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (xhr, status, error) {
-                // Handle errors here
-                console.log("erreur",status,error);
-            }
-        });
-    };
 
 function delAlimentAjax(idVal){
     var data = {
@@ -278,4 +262,39 @@ function sendEditAlimentAjax(button,idVal){
         }
     });
 
+}
+
+function getValuesJournalAjax(dateMin, dateMax){
+    var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel'];
+    var nutriments_totaux=[];
+    $.ajax({
+        url: prefix + 'journal.php?date_min=' + dateMin+'&date_max='+dateMax,  
+        type: 'GET', 
+        dataType: "json",
+        success: function (data) {
+            var k=0
+            for(var i=0; i<data.length-k;i++){//on itère sur tous plats de chaque repas, jusqu'à
+                let plat_n = JSON.parse(data[i]);
+                let plat_n1= JSON.parse(data[i+1]);
+                if(plat_n["date_repas"]==plat_n1["date_repas"] &&  plat_n["nom_type"]==plat_n1["nom_type"]){
+                    for(nutriment in nutriments){
+                        nutriments_totaux.push((plat_n1[nutriment]*plat_n["quantite"]+plat_n[nutriment]*plat_n1["quantite"])/100); //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
+                        
+                    }
+                    i++; //on incrémente une fois puisque le plat suivant à été pris en compte
+                    k++;
+                }
+                else{
+                    for(nutriment in nutriments){
+                        nutriments_totaux.push(plat_n[nutriment]);
+                    }
+                }
+            }
+            console.log(data);
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+            console.log("erreur",status,error);
+        }
+    });
 }

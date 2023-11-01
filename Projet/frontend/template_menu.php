@@ -2,7 +2,7 @@
     require_once('config.php');
     function renderMenuToHTML($currentPageId) {
             // idPage titre
-        $mymenu = array('profile','page_aliments','journal');
+        $mymenu = array('profile','page_aliments','journal','login');
         echo "<nav class=menu id=barre_top>";
         echo "<ul>";
         foreach($mymenu as $pageId) {

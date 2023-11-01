@@ -1,4 +1,8 @@
-<?php require_once('header.html') ?>
+<?php require_once('header.html');
+    require_once("template_menu.php");
+    $currentPageId = 'page_aliments';
+    renderMenuToHTML($currentPageId);
+?>
 
     <div class="login-form-container">
         <h2>Login</h2>
@@ -12,7 +16,7 @@
                 <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
             </div>
             <div class="form-group">
-                <button type="submit">Login</button>
+                <button type="submit" onclick="login();">Login</button>
             </div>
         </form>
     </div>

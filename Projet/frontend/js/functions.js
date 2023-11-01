@@ -284,8 +284,9 @@ function getValuesJournalAjax(dateMin, dateMax){
                         //console.log(nutriments[i],":",plat_n1[nutriments[i]]);
                         plat_n[nutriments[k]]=(plat_n1[nutriments[k]]*plat_n1["quantite"]+plat_n[nutriments[k]]*plat_n["quantite"])/100; //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
                         k++;
-                        i++;
+                        
                     }
+                    i++;
                 }
                 else{
                     let k =0;
@@ -296,16 +297,46 @@ function getValuesJournalAjax(dateMin, dateMax){
                     }
                     
                 }
+                delete plat_n["nom_aliment"];
+                delete plat_n["quantité"];
                 repas.push(plat_n);
                 
             }
             //on a maintenant tous les repas (avec leur date et leur type) dans un array
             //console.log(repas);
+            defTableJournal(repas);
             return repas;
         },
         error: function (xhr, status, error) {
             // Handle errors here
             console.log("erreur",status,error);
         }
+    });
+}
+
+function defTableJournal(repas){
+    
+    $('#JournalTable').DataTable({
+        
+        responsive: true,
+        data: repas,
+        dataSrc:'',
+        columns: [
+            {data:'date_repas'},
+            {data:'nom_type'},
+            {data:'energie'},
+            {data:'lipides'},
+            {data:'glucides'},
+            {data:'sucre'},
+            {data:'fibres'},
+            {data:'proteines'},
+            {data:'sel'},
+            {
+            data: null,
+            render: function(data, type, row) {
+                return '<button onclick="">Voir le repas</button>'
+            }
+            }   
+        ]
     });
 }

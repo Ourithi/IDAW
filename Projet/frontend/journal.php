@@ -11,9 +11,16 @@
 <table class="table" id="JournalTable">
         <thead>
             <tr>
-                <th scope="col">Type de repas</th>
-                <th scope="col">Contenu du repas</th>
-                <th scope="col">Date</th>
+                <th scope="col">Date du repas</th>
+                <th scope="col">Type du repas</th>
+                <th scope="col">Energie (kcal)</th>
+                <th scope="col">Lipides (g)</th>
+                <th scope="col">Glucides (g)</th>
+                <th scope="col">Sucres (g)</th>
+                <th scope="col">Fibres (g)</th>
+                <th scope="col">Proteines (g)</th>
+                <th scope="col">Sel (g)</th>
+                <th scope="col">Voir le contenu du repas<th>
             </tr>
         </thead>
         <tbody>

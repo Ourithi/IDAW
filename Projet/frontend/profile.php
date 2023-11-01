@@ -1,10 +1,21 @@
-<?php require_once('header.html');
+<?php 
+    session_start();
+    if(isset($_SESSION['id_user'])){
+        $id_user =$_SESSION['id_user'];
+    }
+    else{
+        header('Location: ./login.php');
+    }
+
+    require_once('header.html');
+
     require_once("template_menu.php");
     $currentPageId = 'profile';
     renderMenuToHTML($currentPageId);
 ?>
 <script>
-    window.onload= function(){dispUser(1);
+    var id_user='<?php echo $id_user;?>';
+    window.onload= function(){dispUser(id_user);
     };
 </script>
 
@@ -21,7 +32,7 @@
                 <p id="activité"><strong>Activité:</strong> Rarely</p>
                 <br>
                 <div id="buttonWrapper">
-                    <input type="submit" value="Modifier" onclick="activateEditUser(1)";>
+                    <input type="submit" value="Modifier" onclick="activateEditUser(id_user)";>
                 </div>
             </form>
         </div>

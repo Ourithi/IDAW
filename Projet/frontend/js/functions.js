@@ -340,3 +340,36 @@ function defTableJournal(repas){
         ]
     });
 }
+
+function login(){
+    event.preventDefault();
+    var pwd = document.getElementById("password").value;
+    var name = document.getElementById("username").value;
+    console.log(pwd,name);
+    $.ajax({
+        url: prefix + 'login.php?name='+name+'&pwd='+pwd,
+        type: 'GET', 
+        dataType: "json",
+        success(user){
+            console.log(user);
+            $.ajax({
+                url: prefix+"session.php",
+                type: "POST",
+                dataType: "json",
+                data: user,
+                success(response){
+                    console.log("session créée");
+                    window.location.href = "./profile.php";
+                },
+                error: function(xhr,status,error){
+                    console.log("erreur lors de la création de la session",status,error);
+                }
+            });
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+            console.log("erreur",status,error,xhr);
+        }
+
+    });
+}

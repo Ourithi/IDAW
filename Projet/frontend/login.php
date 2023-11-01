@@ -6,7 +6,7 @@
 
     <div class="login-form-container">
         <h2>Login</h2>
-        <form id="login-form">
+        <form id="login-form" onsubmit="login();">
             <div class="form-group">
                 <label for="username">Login:</label>
                 <input type="text" id="username" name="username" placeholder="Entrez votre login" required>
@@ -16,7 +16,7 @@
                 <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe" required>
             </div>
             <div class="form-group">
-                <button type="submit" onclick="login();">Login</button>
+                <button type="submit" >Se connecter</button>
             </div>
         </form>
     </div>

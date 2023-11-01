@@ -14,23 +14,22 @@ $method=$_SERVER['REQUEST_METHOD'];
 switch($method){
     case 'GET':
         //on initialise une liste d'user vide
-        $get=json_decode(file_get_contents('php://input'),true);
         //check params pour login
-        if(isset($get['name']) && isset($get['pwd'])){
-            $name=$get['name'];
-            $pwd=$get['pwd'];
-            $query=$pdo->prepare('SELECT `id` from `users` where `name`="'.$name.'"and `pwd`="'.$pwd.'"');
+        if(isset($_GET['name']) && isset($_GET['pwd'])){
+            $name=$_GET['name'];
+            $pwd=$_GET['pwd'];
+            $query=$pdo->prepare('SELECT `id_user` from `user` where `name`="'.$name.'"and `pwd`="'.$pwd.'"');
             $success=$query->execute();
             //check succès query
             if ($success){
-                $id=$query->fetch(PDO::FETCH_OBJ);
+                $id_user=$query->fetch(PDO::FETCH_OBJ);
                 //check match user/pwd
-                if ($id){
+                if ($id_user){
                     http_response_code(200);
-                    echo json_encode(array("message"=> "Success"));
+                    echo json_encode($id_user);
                 }
                 else{
-                    http_response_code(200);
+                    http_response_code(401);
                     echo json_encode(array("message"=> "Mauvais nom d'utilisateur/mot de passe"));
                 }
             }

@@ -316,6 +316,7 @@ function getValuesJournalAjax(dateMin, dateMax,id_user){
 
 function defTableJournal(repas){
     
+    $('#JournalTable').DataTable().clear().destroy();
     $('#JournalTable').DataTable({
         
         responsive: true,

@@ -46,6 +46,3 @@
         <tbody>
         </tbody>
         </table>
-
-<script>window.onload= function(){getValuesJournalAjax("2023-07-12","2023-07-15",id_user);
-    };</script>

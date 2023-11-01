@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : dim. 29 oct. 2023 à 10:29
+-- Généré le : mer. 01 nov. 2023 à 09:10
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -3691,10 +3691,20 @@ CREATE TABLE IF NOT EXISTS `requerir` (
 
 DROP TABLE IF EXISTS `type`;
 CREATE TABLE IF NOT EXISTS `type` (
-  `ID_TYPE` int NOT NULL,
+  `ID_TYPE` int NOT NULL AUTO_INCREMENT,
   `NOM_TYPE` varchar(50) NOT NULL,
   PRIMARY KEY (`ID_TYPE`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `type`
+--
+
+INSERT INTO `type` (`ID_TYPE`, `NOM_TYPE`) VALUES
+(1, 'Petit-déjeuner'),
+(2, 'Déjeuner'),
+(3, 'Goûter'),
+(4, 'Diner');
 
 -- --------------------------------------------------------
 
@@ -3714,15 +3724,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `SEXE` char(1) NOT NULL,
   PRIMARY KEY (`ID_USER`),
   KEY `FK_USER_PRATIQUER_ACTIVITE` (`ID_ACTIVITE`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `user`
 --
 
 INSERT INTO `user` (`ID_USER`, `ID_ACTIVITE`, `NAME`, `POIDS`, `TAILLE`, `AGE`, `PWD`, `SEXE`) VALUES
-(1, 3, 'touriachi', 79, 188, 23, 'test', 'M'),
-(2, 2, 'test_api', 50, 150, 16, 'test', 'F');
+(1, 1, 'touriachi', 78, 300, 23, 'test', 'M'),
+(2, 2, 'test_api', 50, 150, 16, 'test', 'F'),
+(4, 2, 'test_modif', 50, 150, 16, 'test', 'M');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

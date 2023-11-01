@@ -272,28 +272,36 @@ function getValuesJournalAjax(dateMin, dateMax){
         type: 'GET', 
         dataType: "json",
         success: function (data) {
-            for(var i=0; i<data.length;i++){//on itère sur tous plats de chaque repas, jusqu'à
+            for(var i=0; i<data.length-1;i++){//on itère sur tous plats de chaque repas, jusqu'à
                 //console.log(data[i]);
                 let plat_n =data[i];
+                //console.log(plat_n);
+                //console.log(plat_n["date_repas"]);
                 let plat_n1= data[i+1];
                 if(plat_n["date_repas"]==plat_n1["date_repas"] &&  plat_n["nom_type"]==plat_n1["nom_type"]){
-                    for(nutriment in nutriments){
-                        plat_n1[nutriment]=(plat_n1[nutriment]*plat_n1["quantite"]+plat_n[nutriment]*plat_n["quantite"])/100; //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
-                        
+                    let k =0;
+                    while(k<nutriments.length){
+                        //console.log(nutriments[i],":",plat_n1[nutriments[i]]);
+                        plat_n[nutriments[k]]=(plat_n1[nutriments[k]]*plat_n1["quantite"]+plat_n[nutriments[k]]*plat_n["quantite"])/100; //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
+                        k++;
+                        i++;
                     }
                 }
                 else{
-                    for(nutriment in nutriments){
-                        plat_n[nutriment]=plat_n[nutriment]*plat_n["quantite"]/100;
-                        
+                    let k =0;
+                    while(k<nutriments.length){
+                        //console.log(nutriments[i],":",plat_n1[nutriments[i]]);
+                        plat_n[nutriments[k]]=plat_n[nutriments[k]]*plat_n["quantite"]/100; //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
+                        k++;
                     }
-                    repas.push(plat_n);
+                    
                 }
+                repas.push(plat_n);
                 
             }
             //on a maintenant tous les repas (avec leur date et leur type) dans un array
-            console.log(repas);
-            //return repas;
+            //console.log(repas);
+            return repas;
         },
         error: function (xhr, status, error) {
             // Handle errors here

@@ -354,7 +354,7 @@ function login(){
         success(user){
             console.log(user);
             $.ajax({
-                url: prefix+"session.php",
+                url: prefixFront+"session.php",
                 type: "POST",
                 dataType: "json",
                 data: user,

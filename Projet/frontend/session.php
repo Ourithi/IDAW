@@ -19,6 +19,7 @@ elseif(isset($_SESSION['id_user'])){
     session_destroy();
     http_response_code(200);
     echo json_encode(array("message"=>"Session détruite"));
+    header('Location:./login.php');
 }
 else{
     http_response_code(500);

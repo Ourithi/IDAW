@@ -264,11 +264,11 @@ function sendEditAlimentAjax(button,idVal){
 
 }
 
-function getValuesJournalAjax(dateMin, dateMax){
+function getValuesJournalAjax(dateMin, dateMax,id_user){
     var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel'];
     let repas = [];
     $.ajax({
-        url: prefix + 'journal.php?date_min=' + dateMin+'&date_max='+dateMax,  
+        url: prefix + 'journal.php?date_min=' + dateMin+'&date_max='+dateMax+'&id_user='+id_user,  
         type: 'GET', 
         dataType: "json",
         success: function (data) {
@@ -372,4 +372,11 @@ function login(){
         }
 
     });
+}
+
+function updateJournal(id_user){
+    event.preventDefault();
+    var dateMin= document.getElementById("dateMin").value;
+    var dateMax= document.getElementById("dateMax").value;
+    getValuesJournalAjax(dateMin,dateMax,id_user);
 }

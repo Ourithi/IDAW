@@ -132,3 +132,7 @@ table tr:nth-child(even){
     justify-content: left;
     padding-left: 0px;
 }
+
+.dataTables_wrapper{
+    background-color: white;
+}

@@ -381,3 +381,11 @@ function updateJournal(id_user){
     var dateMax= document.getElementById("dateMax").value;
     getValuesJournalAjax(dateMin,dateMax,id_user);
 }
+
+function addAlimentInput(){
+    var form= document.getElementById("meal-form");
+    var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel'];
+    for(var i = 0;i<nutriments.length;i++){
+        form.append('<div class="form-group"><label for="'+nutriments[i]+'Repas">'+nutriments[i]+':</label><input type="number" id="'+nutriments[i]+'Repas" name="'+nutriments[i]+'Repas" required></div>')
+    };
+}

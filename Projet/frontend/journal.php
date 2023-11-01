@@ -30,20 +30,41 @@
     <button id="sendDates" type="submit">Actualiser</button>
 </div>
 <table class="table" id="JournalTable">
-        <thead>
-            <tr>
-                <th scope="col">Date du repas</th>
-                <th scope="col">Type du repas</th>
-                <th scope="col">Energie (kcal)</th>
-                <th scope="col">Lipides (g)</th>
-                <th scope="col">Glucides (g)</th>
-                <th scope="col">Sucres (g)</th>
-                <th scope="col">Fibres (g)</th>
-                <th scope="col">Proteines (g)</th>
-                <th scope="col">Sel (g)</th>
-                <th scope="col">Voir le contenu du repas<th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-        </table>
+    <thead>
+        <tr>
+            <th scope="col">Date du repas</th>
+            <th scope="col">Type du repas</th>
+            <th scope="col">Energie (kcal)</th>
+            <th scope="col">Lipides (g)</th>
+            <th scope="col">Glucides (g)</th>
+            <th scope="col">Sucres (g)</th>
+            <th scope="col">Fibres (g)</th>
+            <th scope="col">Proteines (g)</th>
+            <th scope="col">Sel (g)</th>
+            <th scope="col">Voir le contenu du repas<th>
+        </tr>
+    </thead>
+<tbody>
+</tbody>
+</table>
+
+<div id="addRepas">
+    <h2>Ajouter un repas</h2>
+    <form id="meal-form">
+            <div class="form-group">
+                <label for="dateRepas">Date:</label>
+                <input type="date" id="dateRepas" name="dateRepas" value="2023-10-30" min="2018-01-01" max="2023-12-31">
+            </div>
+            <div class="form-group">
+                <label for="typeRepas">Type de repas:</label>
+                <select name="typeRepas" id="typeRepas">
+                    <option value="1">Petit-Déjeuner</option>
+                    <option value="2">Déjeuner</option>
+                    <option value="3">Goûter</option>
+                    <option value="4">Dîner</option>
+                </select>
+            </div>
+</div>
+<div class="buttonWrapper">
+    <button onclick="addAlimentInput();">
+</div>

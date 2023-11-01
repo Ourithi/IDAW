@@ -1,4 +1,6 @@
-<?php require_once('header.html');
+<?php 
+    session_start();
+    require_once('header.html');
     require_once("template_menu.php");
     $currentPageId = 'page_aliments';
     renderMenuToHTML($currentPageId);

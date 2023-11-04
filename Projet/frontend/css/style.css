@@ -136,3 +136,17 @@ table tr:nth-child(even){
 .dataTables_wrapper{
     background-color: white;
 }
+
+#meal-form{
+    background-color: white;
+    display: inline-block;
+}
+
+#meal-form input[type="number"] {
+    size: 50px;
+}
+
+#meal-form .form-group {
+    display: inline-block;
+    margin-right: 10px; /* Add spacing between elements if desired */
+}

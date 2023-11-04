@@ -14,7 +14,7 @@
     renderMenuToHTML($currentPageId);
 ?>
 <script>
-    var id_user='<?php echo json_encode($id_user);?>';
+    var id_user=<?php echo json_encode($id_user);?>;
     console.log(id_user);
     window.onload=function(){
         getValuesJournalAjax("2023-07-12","2023-07-15",id_user);
@@ -66,5 +66,6 @@
             </div>
 </div>
 <div class="buttonWrapper">
-    <button onclick="addAlimentInput();">
+    <input type="hidden" value="0" id="hasAliment">
+    <button onclick="addAlimentInput();">Ajouter un aliment</button>
 </div>

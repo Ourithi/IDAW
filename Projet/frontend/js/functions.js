@@ -383,9 +383,111 @@ function updateJournal(id_user){
 }
 
 function addAlimentInput(){
+    event.preventDefault();
     var form= document.getElementById("meal-form");
-    var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel'];
+    var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel','quantite'];
+    $("#meal-form").append('<div class="form-group"><label for="nomAliment">Nom de l\'aliment:</label><input type="test" id="nomAliment" name="nom de l\'aliment" required></div>');
     for(var i = 0;i<nutriments.length;i++){
-        form.append('<div class="form-group"><label for="'+nutriments[i]+'Repas">'+nutriments[i]+':</label><input type="number" id="'+nutriments[i]+'Repas" name="'+nutriments[i]+'Repas" required></div>')
+        var htmlString ='<div class="form-group"><label for="'+nutriments[i]+'Repas">'+nutriments[i]+':</label><input type="number" id="'+nutriments[i]+'Repas" name="'+nutriments[i]+'Repas" required></div>';
+        $("#meal-form").append(htmlString);
     };
+    $("#meal-form").append('<br><br>');
+    var hasAliment = document.getElementById("hasAliment").value;
+    console.log(hasAliment);
+    if(hasAliment ==0){
+        console.log("if");
+        document.getElementById("hasAliment").value= 1;
+        $(".buttonWrapper").append('<button onclick="sendNewRepasAjax(id_user);">Valider</button>');
+    }
+}
+
+function sendNewRepasAjax(id_user){
+    var champs = ['nomAliment','energieRepas', 'lipidesRepas', 'glucidesRepas', 'sucreRepas', 'fibresRepas', 'proteinesRepas', 'selRepas','quantiteRepas'];
+    // Get all input elements with the id "sel"
+    var values_aliments = [];
+    var dateRepas = document.getElementById("dateRepas").value;
+    var typeRepas = document.getElementById("typeRepas").value;
+    for(var i =0; i<champs.length;i++){ //on crée une liste par champs avec les valeurs pour chaque aliment dedans
+        var inputElements = document.querySelectorAll('#'+champs[i]);
+
+        // Create an array to store the values
+        var values = [];
+
+        // Loop through the input elements and get their values
+        inputElements.forEach(function(input) {
+            values.push(input.value);
+        });
+        values_aliments.push(values);
+    }
+    console.log("values_aliments: "+values_aliments);
+    var dataRepas = {
+        date:dateRepas,
+        id_user: id_user,
+        id_type: typeRepas
+    };
+    jsonDataRepas=JSON.stringify(dataRepas)
+
+    $.ajax({ //on commence par créer le repas et récupérer l'id
+        url: prefix+'repas.php', 
+        type: 'POST', // Use the appropriate HTTP method
+        data: jsonDataRepas,
+        contentType: 'application/json',
+        success: function(id_repas) {
+            for(var i =0;i<values_aliments[0].length;i++){ // pour chaque aliment (longueur nomAliment=nbr aliments)
+                var dataAliment = {
+                    nom_aliment:values_aliments[0][i],
+                    energie:values_aliments[1][i],
+                    lipides: values_aliments[2][i],
+                    glucides:values_aliments[3][i],
+                    sucre:values_aliments[4][i],
+                    fibres:values_aliments[5][i],
+                    proteines:values_aliments[6][i],
+                    sel:values_aliments[7][i]
+                };
+                var quantite= values_aliments[8][i];
+                jsonDataAliment=JSON.stringify(dataAliment);
+
+                $.ajax({
+                    url: prefix+'aliments.php',
+                    type:'POST',
+                    data:jsonDataAliment,
+                    contentType: 'application/json',
+                    success: function(id_aliment){
+                        console.log(quantite);
+                        var dataContenir = {
+                            id_repas: id_repas["id_repas"],
+                            id_aliment:id_aliment["id_aliment"],
+                            quantite:quantite
+                        };
+                        jsonDataContenir=JSON.stringify(dataContenir);
+                        $.ajax({
+                            url: prefix+'aliments_repas.php',
+                            type:'POST',
+                            data: jsonDataContenir,
+                            contentType:'application/json',
+                            success: function(data){
+                                console.log("J'adore quand un plan se déroule sans accroc");
+                                var form= document.getElementById("meal-form");
+                                form.innerHTML='<div class="form-group"><label for="dateRepas">Date:</label><input type="date" id="dateRepas" name="dateRepas" value="2023-10-30" min="2018-01-01" max="2023-12-31"></div><div class="form-group"><label for="typeRepas">Type de repas:</label><select name="typeRepas" id="typeRepas"><option value="1">Petit-Déjeuner</option><option value="2">Déjeuner</option><option value="3">Goûter</option><option value="4">Dîner</option></select></div>';
+                            },
+                            error: function(xhr, status, error) {
+                                console.log(status,error,xhr,"erreur contenir ");
+                            }
+            
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(status,error,xhr,"erreur ajout aliment");
+                    }
+    
+                });
+            }
+            
+            
+        },
+        error: function(xhr, status, error) {
+            console.log(status,error,xhr,"erreur création repas");
+        }
+    });
+
 }

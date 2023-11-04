@@ -19,7 +19,7 @@ switch($method){
             $date_min=$_GET['date_min'];
             $date_max=$_GET['date_max'];
             $id_user = $_GET['id_user'];
-            $query=$pdo->prepare('SELECT repas.date_repas,aliment.nom_aliment, type.nom_type,aliment.energie,aliment.lipides,aliment.glucides,aliment.sucre,aliment.fibres,aliment.proteines,aliment.sel, contenir.quantite 
+            $query=$pdo->prepare('SELECT repas.id_repas, repas.date_repas,aliment.nom_aliment, type.nom_type,aliment.energie,aliment.lipides,aliment.glucides,aliment.sucre,aliment.fibres,aliment.proteines,aliment.sel, contenir.quantite 
             FROM repas 
             INNER JOIN contenir ON repas.ID_REPAS = contenir.ID_REPAS
             INNER JOIN type ON type.ID_TYPE = repas.ID_TYPE

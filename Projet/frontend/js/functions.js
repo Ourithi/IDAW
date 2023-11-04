@@ -279,6 +279,7 @@ function getValuesJournalAjax(dateMin, dateMax,id_user){
                 for(var i=0; i<data.length-1;i++){//on itère sur tous plats de chaque repas, jusqu'à
                     //console.log(data[i]);
                     let plat_n =data[i];
+                    let id_repas=data[i]["id_repas"];
                     //console.log(plat_n);
                     //console.log(plat_n["date_repas"]);
                     let plat_n1= data[i+1];
@@ -303,6 +304,8 @@ function getValuesJournalAjax(dateMin, dateMax,id_user){
                     }
                     delete plat_n["nom_aliment"];
                     delete plat_n["quantité"];
+                    plat_n["id_repas"]=id_repas;
+                    //console.log(plat_n);
                     repas.push(plat_n);
                     
                 }
@@ -320,7 +323,7 @@ function getValuesJournalAjax(dateMin, dateMax,id_user){
 }
 
 function defTableJournal(repas){
-    
+    //console.log(repas);
     $('#JournalTable').DataTable().clear().destroy();
     $('#JournalTable').DataTable({
         
@@ -328,6 +331,7 @@ function defTableJournal(repas){
         data: repas,
         dataSrc:'',
         columns: [
+            {data:'id_repas', visible: false },
             {data:'date_repas'},
             {data:'nom_type'},
             {data:'energie'},
@@ -340,7 +344,7 @@ function defTableJournal(repas){
             {
             data: null,
             render: function(data, type, row) {
-                return '<button onclick="">Voir le repas</button>'
+                return '<button onclick="voirRepas(this);">Voir le repas</button>';
             }
             }   
         ]
@@ -495,4 +499,114 @@ function sendNewRepasAjax(id_user){
         }
     });
 
+}
+
+function voirRepas(button) {
+    var table = $('#JournalTable').DataTable();
+    var rowData = table.row($(button).closest('tr')).data();
+
+    if (rowData) {
+        var id_repas = rowData.id_repas;
+        window.location.replace(prefixFront+"repas.php?id_repas="+id_repas);
+    }
+}
+
+function defTableAlimentsRepas(id_repas){
+    $('#RepasTable').DataTable({
+        ajax: {
+        url: prefix+'edit_repas.php?id_repas='+id_repas, 
+        dataSrc: ''
+        },
+        responsive: true,
+        columns: [
+            {data:'id_aliment', visible:false},
+            {data:'nom_aliment'},
+            {data:'energie'},
+            {data:'lipides'},
+            {data:'glucides'},
+            {data:'sucre'},
+            {data:'fibres'},
+            {data:'proteines'},
+            {data:'sel'},
+            {data:'quantite'},
+            {
+            data: null,
+            render: function(data, type, row) {
+                return '<button onclick="activateEditAlimentRepas(this,' + id_repas + ')">Edit</button>' +
+                       '<button id=delRow onclick="delAlimentRepasAjax(this,' + id_repas + ');delRow(this)">Delete</button>';
+            }
+            }   
+        ]
+    });
+}
+
+function delAlimentRepasAjax(button,id_repas){
+
+    var table = $('#RepasTable').DataTable();
+    var rowData = table.row($(button).closest('tr')).data();
+
+    if (rowData) {
+        var id_aliment = rowData.id_aliment;
+    }
+    var data = {
+        id_repas:id_repas,
+        id_aliment:id_aliment
+    };
+    $.ajax({
+        url: prefix + 'edit_repas.php',
+        type: 'DELETE',
+        dataType:"json",
+        data: JSON.stringify(data),
+        success: function(response) {
+            console.log("Aliment supprimé du repas")
+        },
+        error: function(xhr, status, error) {
+            // Handle errors here
+            console.error('Request failed with status: ' + xhr.status);
+        }
+    })
+}
+
+function activateEditAlimentRepas(button,idRepas){
+    var table = $('#RepasTable').DataTable();
+    var rowData = table.row($(button).closest('tr')).data();
+
+    if (rowData) {
+        var idAliment = rowData.id_aliment;
+    }
+    let row = button.parentNode.parentNode;
+    var cases = row.children;
+    var qte = cases[cases.length-2];
+    var boutons = cases[cases.length-1];
+    var value_qte = qte.textContent; 
+    
+
+
+    qte.innerHTML= `<td><input type='number' value=${value_qte} class='form-control' id='editQte' ></td>`;
+    boutons.innerHTML = `<td><button onclick="sendEditAlimentRepasAjax(this,${idAliment},${idRepas})">Valider</button><td>`
+}
+
+function sendEditAlimentRepasAjax(button,idAliment,idRepas){
+    var qte = document.getElementById("editQte").value;
+    var caseBouton = button.parentNode;
+    let row = button.parentNode.parentNode;
+    var cases = row.children;
+    var caseQte = cases[cases.length-2];
+    var dataObject = {qte:qte,
+        id_aliment:idAliment,
+        id_repas:idRepas
+        };
+    var jsonData= JSON.stringify(dataObject);
+    $.ajax({
+        url: prefix+'edit_repas.php', // Replace with your API endpoint URL
+        type: 'PUT', // Use the appropriate HTTP method
+        data: jsonData,
+        contentType: 'application/json',
+        success: function(response) {
+            console.log("yay!");
+            caseQte.innerHTML=`<td>${qte}</td>`;
+            caseBouton.innerHTML='<button onclick="activateEditAlimentRepas(this,' + idRepas + ')">Edit</button>' +
+            '<button id=delRow onclick="delAlimentRepasAjax(this,' + idRepas + ');delRow(this)">Delete</button>';
+        }
+    })
 }

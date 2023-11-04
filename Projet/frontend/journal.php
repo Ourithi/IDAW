@@ -32,6 +32,7 @@
 <table class="table" id="JournalTable">
     <thead>
         <tr>
+            <th scope="col">Id</th>
             <th scope="col">Date du repas</th>
             <th scope="col">Type du repas</th>
             <th scope="col">Energie (kcal)</th>

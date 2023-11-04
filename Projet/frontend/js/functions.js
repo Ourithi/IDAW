@@ -610,3 +610,4 @@ function sendEditAlimentRepasAjax(button,idAliment,idRepas){
         }
     })
 }
+

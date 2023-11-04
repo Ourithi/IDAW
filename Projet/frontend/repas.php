@@ -45,4 +45,12 @@
         </tbody>
         </table>
 
+<div id="addRepas">
+    <h2>Ajouter un repas</h2>
+    <input type="text" id="autocomplete-input">
+</div>
+<div class="buttonWrapper">
+    <input type="hidden" value="0" id="hasAliment">
+    <button onclick="addAlimentRepasInput();">Ajouter un aliment</button>
+</div>
 <script>defTableAlimentsRepas(id_repas)</script>

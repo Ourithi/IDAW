@@ -2,7 +2,7 @@
 
     <div class="login-form-container">
         <h2>Créer un compte</h2>
-        <form id="login-form">
+        <form id="login-form" onsubmit="createAccount()">
             <div class="form-group">
                 <label for="username">Login:</label>
                 <input type="text" id="username" name="username" placeholder="Entrez votre login" required>
@@ -13,11 +13,11 @@
             </div>
             <div class="form-group">
                 <label for="poids">Poids (kg):</label>
-                <input type="number" id="poids" name="poids" placeholder="Entrez votre age" required>
+                <input type="number" id="poids" name="poids" placeholder="Entrez votre poids" required>
             </div>
             <div class="form-group">
                 <label for="age">Age:</label>
-                <input type="number" id="age" name="age" placeholder="Entrez votre poids" required>
+                <input type="number" id="age" name="age" placeholder="Entrez votre age" required>
             </div>
             <div class="form-group">
                 <label for="genre">Genre:</label>

@@ -21,6 +21,9 @@
                 <button type="submit" >Se connecter</button>
             </div>
         </form>
+        <div class="form-group">
+            <a href="register.php">Créer un compte</a>
+        </div>
     </div>
 </body>
 </html>

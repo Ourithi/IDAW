@@ -165,3 +165,6 @@ id_repas
     margin-right: 10px; /* Add spacing between elements if desired */
 }
 
+.charts-container{
+    background-color: white;
+}

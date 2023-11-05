@@ -703,3 +703,199 @@ function sendNewAlimentRepasAjax(id_repas){
             
 }
 
+function createAccount(){
+    event.preventDefault();
+    var pwd = document.getElementById("password").value;
+    var name = document.getElementById("username").value;
+    var taille = document.getElementById("taille").value;
+    var poids = document.getElementById("poids").value;
+    var sexe = document.getElementById("genre").value;
+    var id_activite = document.getElementById("activite").value;
+    var age = document.getElementById("age").value;
+    var dataObject = {pwd:pwd,
+        name:name,
+        taille:taille,
+        poids:poids,
+        sexe:sexe,
+        id_activite:id_activite,
+        age:age
+        };
+    var jsonData= JSON.stringify(dataObject);
+    $.ajax({
+        url:prefix+'user.php',
+        data:jsonData,
+        type:'POST',
+        contentType:'application/json',
+        success:function(data){
+            login();
+        }
+    })
+}
+
+function getGraphAjax(dateMin, dateMax,id_user){
+    var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel'];
+    let repas = [];
+    $.ajax({
+        url: prefix + 'journal.php?date_min=' + dateMin+'&date_max='+dateMax+'&id_user='+id_user,  
+        type: 'GET', 
+        dataType: "json",
+        success: function (data) {
+            if(data.length==1){
+                repas.push(data[0]);
+            }
+            else{
+                for(var i=0; i<data.length-1;i++){//on itère sur tous plats de chaque repas, jusqu'à
+                    //console.log(data[i]);
+                    let plat_n =data[i];
+                    let id_repas=data[i]["id_repas"];
+                    //console.log(plat_n);
+                    //console.log(plat_n["date_repas"]);
+                    let plat_n1= data[i+1];
+                    if(plat_n["date_repas"]==plat_n1["date_repas"] &&  plat_n["nom_type"]==plat_n1["nom_type"]){
+                        let k =0;
+                        while(k<nutriments.length){
+                            //console.log(nutriments[i],":",plat_n1[nutriments[i]]);
+                            plat_n[nutriments[k]]=(plat_n1[nutriments[k]]*plat_n1["quantite"]+plat_n[nutriments[k]]*plat_n["quantite"])/100; //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
+                            k++;
+                            
+                        }
+                        i++;
+                    }
+                    else{
+                        let k =0;
+                        while(k<nutriments.length){
+                            //console.log(nutriments[i],":",plat_n1[nutriments[i]]);
+                            plat_n[nutriments[k]]=plat_n[nutriments[k]]*plat_n["quantite"]/100; //on calcule l'apport total de nutriment de chaque plat en fct de la quantité
+                            k++;
+                        }
+                        
+                    }
+                    delete plat_n["nom_aliment"];
+                    delete plat_n["quantité"];
+                    plat_n["id_repas"]=id_repas;
+                    //console.log(plat_n);
+                    repas.push(plat_n);
+                    
+                }
+            }
+            //on a maintenant tous les repas (avec leur date et leur type) dans un array
+            console.log(repas);
+            console.log('trigger');
+            calcEnergieUser(repas,id_user);
+            return repas;
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+            console.log("erreur",status,error);
+        }
+    });
+}
+
+function dispGraph(apiData,bmr){
+    const dates = Array.from(new Set(apiData.map(item => item.date_repas)));
+
+    const fields = ["energie", "glucides", "sucre", "fibres", "proteines", "sel"];
+    var recommandations = [bmr,250,30,35,50,5];
+    //console.log(recommandations);
+    
+
+    fields.forEach((field, index) => {
+        const data = dates.map(date => {
+            const fieldData = apiData.filter(item => item.date_repas === date).map(item => parseFloat(item[field]));
+            return fieldData.reduce((a, b) => a + b, 0) / fieldData.length;
+        });
+
+        const chartCanvas = document.getElementById(`${field}Chart`);
+        const ctx = chartCanvas.getContext('2d');
+        const constantValue = recommandations[index];
+
+        const horizontalLine = {
+            type: 'line',
+            mode: 'horizontal',
+            scaleID: 'y',
+            value: constantValue,
+            borderColor: 'red',
+            borderWidth: 2, // Increase the line width for visibility
+            label: {
+                backgroundColor: 'red', // Background color for the label
+                content: constantValue, // Text on the label
+                enabled: true, // Display the label
+                position: 'right', // Position of the label
+            },
+        };
+        console.log(horizontalLine);
+        new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        label: field,
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 1)', // Solid color
+                        borderWidth: 0.2, // Solid borders
+                    }],
+                },
+                options: {
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: `${field}`,
+                            },
+                            stacked: true,
+                        },
+                        y: {
+                            beginAtZero: true,
+                        },
+                    },
+                    plugins: {
+                        legend: {
+                            display: false, // Hide the legend
+                        },
+                        annotation: {
+                            annotations: [horizontalLine], // Add the horizontal line
+                        },
+                        layout: {
+                            padding: {
+                                left: 10,
+                                right: 10,
+                                top: 10,
+                                bottom: 10,
+                            },
+                        },
+                    },
+                    maintainAspectRatio: false, // Allow resizing the canvas
+                },
+            });
+        });
+}
+
+function calcEnergieUser(apiData,id_user){
+    $.ajax({
+        url: prefix + 'user.php?id_user=' + id_user,  
+        type: 'GET', 
+        dataType: "json",
+        success: function (data) {
+            //console.log(data);
+            var taille = data["TAILLE"];
+            var poids = data["POIDS"];
+            var age = data["AGE"];
+            var sexe = data["SEXE"];
+            var activite= data["ID_ACTIVITE"];
+            if(sexe== 'M'){
+                var bmr =  88.362 + 13.397* poids + 4.799*taille- 5.677*age;
+            }
+            else{
+                var bmr =  447.593 + 9.247* poids + 3.098*taille - 4.330*age;
+            }
+            dispGraph(apiData,bmr*activite);
+            console.log("activite:",activite)
+            console.log("bmr:",bmr*activite);
+            //return(Array(data["NAME"]),data["TAILLE"],data["POIDS"],data["AGE"],data["SEXE"]);
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+            console.log("erreur",status,error);
+        }
+    });
+}

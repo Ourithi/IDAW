@@ -136,7 +136,7 @@ table tr:nth-child(even){
 .dataTables_wrapper{
     background-color: white;
 }
-
+id_repas
 #meal-form{
     background-color: white;
     display: inline-block;
@@ -150,3 +150,18 @@ table tr:nth-child(even){
     display: inline-block;
     margin-right: 10px; /* Add spacing between elements if desired */
 }
+
+#aliment-form{
+    background-color: white;
+    display: inline-block;
+}
+
+#aliment-form input[type="number"] {
+    size: 50px;
+}
+
+#aliment-form .form-group {
+    display: inline-block;
+    margin-right: 10px; /* Add spacing between elements if desired */
+}
+

@@ -512,6 +512,7 @@ function voirRepas(button) {
 }
 
 function defTableAlimentsRepas(id_repas){
+    $('#RepasTable').DataTable().clear().destroy();
     $('#RepasTable').DataTable({
         ajax: {
         url: prefix+'edit_repas.php?id_repas='+id_repas, 
@@ -609,5 +610,96 @@ function sendEditAlimentRepasAjax(button,idAliment,idRepas){
             '<button id=delRow onclick="delAlimentRepasAjax(this,' + idRepas + ');delRow(this)">Delete</button>';
         }
     })
+}
+
+function addAlimentRepasInput(){
+    event.preventDefault();
+    var form= document.getElementById("aliment-form");
+    var nutriments = ['energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel','quantite'];
+    $("#aliment-form").append('<div class="form-group"><label for="nomAliment">Nom de l\'aliment:</label><input type="test" id="nomAliment" name="nom de l\'aliment" required></div>');
+    for(var i = 0;i<nutriments.length;i++){
+        var htmlString ='<div class="form-group"><label for="'+nutriments[i]+'Repas">'+nutriments[i]+':</label><input type="number" id="'+nutriments[i]+'Repas" name="'+nutriments[i]+'Repas" required></div>';
+        $("#aliment-form").append(htmlString);
+    };
+    $("#aliment-form").append('<br><br>');
+    var hasAliment = document.getElementById("hasAliment").value;
+    console.log(hasAliment);
+    if(hasAliment ==0){
+        console.log("if");
+        document.getElementById("hasAliment").value= 1;
+        $(".buttonWrapper").append('<button onclick="sendNewAlimentRepasAjax(id_repas);">Valider</button>');
+    }
+}
+
+function sendNewAlimentRepasAjax(id_repas){
+    var champs = ['nomAliment','energieRepas', 'lipidesRepas', 'glucidesRepas', 'sucreRepas', 'fibresRepas', 'proteinesRepas', 'selRepas','quantiteRepas'];
+    // Get all input elements with the id "sel"
+    var values_aliments = [];
+    for(var i =0; i<champs.length;i++){ //on crée une liste par champs avec les valeurs pour chaque aliment dedans
+        var inputElements = document.querySelectorAll('#'+champs[i]);
+
+        // Create an array to store the values
+        var values = [];
+
+        // Loop through the input elements and get their values
+        inputElements.forEach(function(input) {
+            values.push(input.value);
+        });
+        values_aliments.push(values);
+    }
+    console.log("values_aliments: "+values_aliments);
+
+            for(var i =0;i<values_aliments[0].length;i++){ // pour chaque aliment (longueur nomAliment=nbr aliments)
+                var dataAliment = {
+                    nom_aliment:values_aliments[0][i],
+                    energie:values_aliments[1][i],
+                    lipides: values_aliments[2][i],
+                    glucides:values_aliments[3][i],
+                    sucre:values_aliments[4][i],
+                    fibres:values_aliments[5][i],
+                    proteines:values_aliments[6][i],
+                    sel:values_aliments[7][i]
+                };
+                var quantite= values_aliments[8][i];
+                jsonDataAliment=JSON.stringify(dataAliment);
+
+                $.ajax({
+                    url: prefix+'aliments.php',
+                    type:'POST',
+                    data:jsonDataAliment,
+                    contentType: 'application/json',
+                    success: function(id_aliment){
+                        console.log(quantite);
+                        var dataContenir = {
+                            id_repas: id_repas,
+                            id_aliment:id_aliment["id_aliment"],
+                            quantite:quantite
+                        };
+                        jsonDataContenir=JSON.stringify(dataContenir);
+                        $.ajax({
+                            url: prefix+'aliments_repas.php',
+                            type:'POST',
+                            data: jsonDataContenir,
+                            contentType:'application/json',
+                            success: function(data){
+                                console.log("J'adore quand un plan se déroule sans accroc");
+                                defTableAlimentsRepas(id_repas);
+                                var div= document.getElementById("addRepas");
+                                div.innerHTML ='<h2>Ajouter un repas</h2><form id="aliment-form">';
+                                },
+                            error: function(xhr, status, error) {
+                                console.log(status,error,xhr,"erreur contenir ");
+                            }
+            
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(status,error,xhr,"erreur ajout aliment");
+                    }
+    
+                });
+            }
+            
+            
 }
 

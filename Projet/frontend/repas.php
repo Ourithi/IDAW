@@ -47,7 +47,7 @@
 
 <div id="addRepas">
     <h2>Ajouter un repas</h2>
-    <input type="text" id="autocomplete-input">
+    <form id="aliment-form">
 </div>
 <div class="buttonWrapper">
     <input type="hidden" value="0" id="hasAliment">

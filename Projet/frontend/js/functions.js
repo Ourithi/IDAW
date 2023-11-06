@@ -369,7 +369,7 @@ function login(){
                 data: user,
                 success(response){
                     console.log("session créée");
-                    window.location.href = "./profile.php";
+                    window.location.href = "./index.php";
                 },
                 error: function(xhr,status,error){
                     console.log("erreur lors de la création de la session",status,error);
@@ -791,15 +791,22 @@ function getGraphAjax(dateMin, dateMax,id_user){
     });
 }
 
-function dispGraph(apiData,bmr){
+function updateGraph(id_user){
+    event.preventDefault();
+    var dateMin= document.getElementById("dateMin").value;
+    var dateMax= document.getElementById("dateMax").value;
+    getGraphAjax(dateMin,dateMax,id_user);
+}
+
+function dispGraph(apiData, bmr) {
     const dates = Array.from(new Set(apiData.map(item => item.date_repas)));
-
     const fields = ["energie", "glucides", "sucre", "fibres", "proteines", "sel"];
-    var recommandations = [bmr,250,30,35,50,5];
-    //console.log(recommandations);
-    
+    var recommandations = [bmr, 50, 10, 10, 25, 5];
 
-    fields.forEach((field, index) => {
+    // Store the chart instances in a global object
+    window.myCharts = window.myCharts || {};
+
+    function createChart(field, index) {
         const data = dates.map(date => {
             const fieldData = apiData.filter(item => item.date_repas === date).map(item => parseFloat(item[field]));
             return fieldData.reduce((a, b) => a + b, 0) / fieldData.length;
@@ -815,60 +822,73 @@ function dispGraph(apiData,bmr){
             scaleID: 'y',
             value: constantValue,
             borderColor: 'red',
-            borderWidth: 2, // Increase the line width for visibility
+            borderWidth: 2,
             label: {
-                backgroundColor: 'red', // Background color for the label
-                content: constantValue, // Text on the label
-                enabled: true, // Display the label
-                position: 'right', // Position of the label
+                backgroundColor: 'red',
+                content: constantValue,
+                enabled: true,
+                position: 'right',
             },
         };
-        console.log(horizontalLine);
-        new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: dates,
-                    datasets: [{
-                        label: field,
-                        data: data,
-                        backgroundColor: 'rgba(75, 192, 192, 1)', // Solid color
-                        borderWidth: 0.2, // Solid borders
-                    }],
-                },
-                options: {
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: `${field}`,
-                            },
-                            stacked: true,
+
+        // Check if a chart instance for the canvas exists and destroy it
+        if (window.myCharts[`${field}Chart`]) {
+            window.myCharts[`${field}Chart`].destroy();
+        }
+
+        const newChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: field,
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 0.2,
+                }],
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: `${field}`,
                         },
-                        y: {
-                            beginAtZero: true,
+                        stacked: true,
+                    },
+                    y: {
+                        beginAtZero: true,
+                    },
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    },
+                    annotation: {
+                        annotations: [horizontalLine],
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 10,
+                            bottom: 10,
                         },
                     },
-                    plugins: {
-                        legend: {
-                            display: false, // Hide the legend
-                        },
-                        annotation: {
-                            annotations: [horizontalLine], // Add the horizontal line
-                        },
-                        layout: {
-                            padding: {
-                                left: 10,
-                                right: 10,
-                                top: 10,
-                                bottom: 10,
-                            },
-                        },
-                    },
-                    maintainAspectRatio: false, // Allow resizing the canvas
                 },
-            });
+                maintainAspectRatio: false,
+            },
         });
+
+        // Store the new chart instance
+        window.myCharts[`${field}Chart`] = newChart;
+    }
+
+    fields.forEach((field, index) => {
+        createChart(field, index);
+    });
 }
+
 
 function calcEnergieUser(apiData,id_user){
     $.ajax({

@@ -18,8 +18,18 @@
     document.addEventListener('DOMContentLoaded',function(){
         getGraphAjax("2023-07-7","2023-07-15",id_user);
     });
-    
+    window.onload=function(){
+        document.getElementById("sendDates").onclick= function() {
+            updateGraph(id_user);
+        };
+    };
 </script>
+
+<div id="inputDates">
+    <input id="dateMin" type="date" value="2023-10-30" min="2018-01-01" max="2023-12-31">
+    <input id="dateMax" type="date" value="2023-10-31" min="2018-01-01" max="2023-12-31">
+    <button id="sendDates" type="submit">Actualiser</button>
+</div>
 
 <div class="charts-container">
     <div class="chart">

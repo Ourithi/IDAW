@@ -38,7 +38,7 @@
                 <th scope="col">Proteines (g)</th>
                 <th scope="col">Sel (g)</th>
                 <th scope="col">Quantite (g)</th>
-                <th scope="col">Edit/delete</th>
+                <th scope="col">Modifier/Supprimer</th>
             </tr>
         </thead>
         <tbody>

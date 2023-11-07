@@ -8,7 +8,7 @@
             $login_text = "logout";
             $login_href = "session";
         }    
-        $mymenu = array('index','profile','page_aliments','journal');
+        $mymenu = array('accueil','profil','page_aliments','journal');
         echo "<nav class=menu id=barre_top>";
         echo "<ul>";
         foreach($mymenu as $pageId) {

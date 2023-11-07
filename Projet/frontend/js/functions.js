@@ -87,6 +87,20 @@ function getAlimentsAjax(){
 
 function defTableAliments(){
     $('#AlimentsTable').DataTable({
+        "language": {
+            "lengthMenu": "Afficher _MENU_ résultats par page",
+            "zeroRecords": "Pas de données... Désolé!",
+            "info": "Affichage de la page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune information disponible",
+            "search": "Rechercher:",
+            "paginate": {
+                "first":      "Premier",
+                "last":       "Dernier",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+            },
+            "infoFiltered": "(fitré de _MAX_ données totales)"
+        },
         ajax: {
         url: prefix+'aliments.php', 
         dataSrc: ''
@@ -104,8 +118,8 @@ function defTableAliments(){
             {
             data: null,
             render: function(data, type, row) {
-                return '<button onclick="activateEditAliment(this,' + data.ID_ALIMENT + ')">Edit</button>' +
-                       '<button id=delRow onclick="delAlimentAjax(' + data.ID_ALIMENT + ');delRow(this)">Delete</button>';
+                return '<button onclick="activateEditAliment(this,' + data.ID_ALIMENT + ')">Modifier</button>' +
+                       '<button id=delRow onclick="delAlimentAjax(' + data.ID_ALIMENT + ');delRow(this)">Supprimer</button>';
             }
             }   
         ]
@@ -149,6 +163,20 @@ function sendEditUser(idVal){
 function defTableRepas(){
     
     $('#RepassTable').DataTable({
+        "language": {
+            "lengthMenu": "Afficher _MENU_ résultats par page",
+            "zeroRecords": "Pas de données... Désolé!",
+            "info": "Affichage de la page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune information disponible",
+            "search": "Rechercher:",
+            "paginate": {
+                "first":      "Premier",
+                "last":       "Dernier",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+            },
+            "infoFiltered": "(fitré de _MAX_ données totales)"
+        },
         ajax: {
         url: prefix+'aliments_repas.php', 
         dataSrc: ''
@@ -166,8 +194,8 @@ function defTableRepas(){
             {
             data: null,
             render: function(data, type, row) {
-                return '<button onclick="editData(' + data.id_aliment + ')">Edit</button>' +
-                       '<button id=delRow onclick="delAjax(' + data.id_aliment + ');delRow(this)">Delete</button>';
+                return '<button onclick="editData(' + data.id_aliment + ')">Modifier</button>' +
+                       '<button id=delRow onclick="delAjax(' + data.id_aliment + ');delRow(this)">Supprimer</button>';
             }
             }   
         ]
@@ -327,6 +355,20 @@ function defTableJournal(repas){
     $('#JournalTable').DataTable().clear().destroy();
     $('#JournalTable').DataTable({
         
+        "language": {
+            "lengthMenu": "Afficher _MENU_ résultats par page",
+            "zeroRecords": "Pas de données... Désolé!",
+            "info": "Affichage de la page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune information disponible",
+            "search": "Rechercher:",
+            "paginate": {
+                "first":      "Premier",
+                "last":       "Dernier",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+            },
+            "infoFiltered": "(fitré de _MAX_ données totales)"
+        },
         responsive: true,
         data: repas,
         dataSrc:'',
@@ -514,6 +556,20 @@ function voirRepas(button) {
 function defTableAlimentsRepas(id_repas){
     $('#RepasTable').DataTable().clear().destroy();
     $('#RepasTable').DataTable({
+        "language": {
+            "lengthMenu": "Afficher _MENU_ résultats par page",
+            "zeroRecords": "Pas de données... Désolé!",
+            "info": "Affichage de la page _PAGE_ sur _PAGES_",
+            "infoEmpty": "Aucune information disponible",
+            "search": "Rechercher:",
+            "paginate": {
+                "first":      "Premier",
+                "last":       "Dernier",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+            },
+            "infoFiltered": "(fitré de _MAX_ données totales)"
+        },
         ajax: {
         url: prefix+'edit_repas.php?id_repas='+id_repas, 
         dataSrc: ''
@@ -533,8 +589,8 @@ function defTableAlimentsRepas(id_repas){
             {
             data: null,
             render: function(data, type, row) {
-                return '<button onclick="activateEditAlimentRepas(this,' + id_repas + ')">Edit</button>' +
-                       '<button id=delRow onclick="delAlimentRepasAjax(this,' + id_repas + ');delRow(this)">Delete</button>';
+                return '<button onclick="activateEditAlimentRepas(this,' + id_repas + ')">Modifier</button>' +
+                       '<button id=delRow onclick="delAlimentRepasAjax(this,' + id_repas + ');delRow(this)">Supprimer</button>';
             }
             }   
         ]

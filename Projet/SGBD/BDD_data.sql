@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 08 nov. 2023 à 12:29
+-- Généré le : mer. 08 nov. 2023 à 12:31
 -- Version du serveur : 8.0.31
 -- Version de PHP : 8.0.26
 
@@ -21,19 +21,6 @@ SET time_zone = "+00:00";
 -- Base de données : `db_projet`
 --
 
--- --------------------------------------------------------
-
---
--- Structure de la table `activite`
---
-
-DROP TABLE IF EXISTS `activite`;
-CREATE TABLE IF NOT EXISTS `activite` (
-  `ID_ACTIVITE` int NOT NULL AUTO_INCREMENT,
-  `NOM_ACTIVITE` varchar(50) NOT NULL,
-  PRIMARY KEY (`ID_ACTIVITE`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Déchargement des données de la table `activite`
 --
@@ -43,26 +30,6 @@ INSERT INTO `activite` (`ID_ACTIVITE`, `NOM_ACTIVITE`) VALUES
 (2, '1 à 3 fois par semaine'),
 (3, '3 à 5 fois par semaine'),
 (4, 'plus de 5 fois par semaine');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `aliment`
---
-
-DROP TABLE IF EXISTS `aliment`;
-CREATE TABLE IF NOT EXISTS `aliment` (
-  `ID_ALIMENT` int NOT NULL AUTO_INCREMENT,
-  `NOM_ALIMENT` varchar(50) NOT NULL,
-  `ENERGIE` decimal(15,1) DEFAULT NULL,
-  `LIPIDES` decimal(15,1) DEFAULT NULL,
-  `GLUCIDES` decimal(15,1) DEFAULT NULL,
-  `SUCRE` decimal(15,1) DEFAULT NULL,
-  `FIBRES` decimal(15,1) DEFAULT NULL,
-  `PROTEINES` decimal(15,1) DEFAULT NULL,
-  `SEL` decimal(15,1) DEFAULT NULL,
-  PRIMARY KEY (`ID_ALIMENT`)
-) ENGINE=MyISAM AUTO_INCREMENT=2096 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `aliment`
@@ -2168,21 +2135,6 @@ INSERT INTO `aliment` (`ID_ALIMENT`, `NOM_ALIMENT`, `ENERGIE`, `LIPIDES`, `GLUCI
 (2094, 'aliment test', '1.0', '1.0', '1.0', '1.0', '1.0', '1.0', '1.0'),
 (2095, 'aliment test', '1.0', '1.0', '1.0', '1.0', '1.0', '1.0', '1.0');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `contenir`
---
-
-DROP TABLE IF EXISTS `contenir`;
-CREATE TABLE IF NOT EXISTS `contenir` (
-  `ID_ALIMENT` int NOT NULL,
-  `ID_REPAS` int NOT NULL,
-  `QUANTITE` int NOT NULL,
-  PRIMARY KEY (`ID_ALIMENT`,`ID_REPAS`),
-  KEY `FK_CONTENIR_CONTENIR2_REPAS` (`ID_REPAS`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Déchargement des données de la table `contenir`
 --
@@ -3149,23 +3101,6 @@ INSERT INTO `contenir` (`ID_ALIMENT`, `ID_REPAS`, `QUANTITE`) VALUES
 (539, 480, 100),
 (514, 480, 100);
 
--- --------------------------------------------------------
-
---
--- Structure de la table `repas`
---
-
-DROP TABLE IF EXISTS `repas`;
-CREATE TABLE IF NOT EXISTS `repas` (
-  `ID_REPAS` int NOT NULL AUTO_INCREMENT,
-  `ID_TYPE` int NOT NULL,
-  `ID_USER` int NOT NULL,
-  `DATE_REPAS` date DEFAULT NULL,
-  PRIMARY KEY (`ID_REPAS`),
-  KEY `FK_REPAS_ETRE_TYPE` (`ID_TYPE`),
-  KEY `FK_REPAS_ETRE_MANG_USER` (`ID_USER`)
-) ENGINE=MyISAM AUTO_INCREMENT=481 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Déchargement des données de la table `repas`
 --
@@ -3652,19 +3587,6 @@ INSERT INTO `repas` (`ID_REPAS`, `ID_TYPE`, `ID_USER`, `DATE_REPAS`) VALUES
 (479, 4, 1, '2023-09-30'),
 (480, 4, 1, '2023-10-30');
 
--- --------------------------------------------------------
-
---
--- Structure de la table `type`
---
-
-DROP TABLE IF EXISTS `type`;
-CREATE TABLE IF NOT EXISTS `type` (
-  `ID_TYPE` int NOT NULL AUTO_INCREMENT,
-  `NOM_TYPE` varchar(50) NOT NULL,
-  PRIMARY KEY (`ID_TYPE`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 --
 -- Déchargement des données de la table `type`
 --
@@ -3674,26 +3596,6 @@ INSERT INTO `type` (`ID_TYPE`, `NOM_TYPE`) VALUES
 (2, 'Déjeuner'),
 (3, 'Goûter'),
 (4, 'Diner');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `user`
---
-
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `ID_USER` int NOT NULL AUTO_INCREMENT,
-  `ID_ACTIVITE` int NOT NULL,
-  `NAME` varchar(50) NOT NULL,
-  `POIDS` int NOT NULL,
-  `TAILLE` int NOT NULL,
-  `AGE` int NOT NULL,
-  `PWD` varchar(50) NOT NULL,
-  `SEXE` char(1) NOT NULL,
-  PRIMARY KEY (`ID_USER`),
-  KEY `FK_USER_PRATIQUER_ACTIVITE` (`ID_ACTIVITE`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `user`

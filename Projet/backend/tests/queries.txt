@@ -1,8 +1,0 @@
-SELECT repas.date_repas,aliment.nom_aliment, type.nom_type,aliment.energie,aliment.lipides,aliment.glucides,aliment.sucre,aliment.fibres,aliment.proteines,aliment.sel, contenir.quantite 
-FROM repas 
-INNER JOIN contenir ON repas.ID_REPAS = contenir.ID_REPAS
-INNER JOIN type ON type.ID_TYPE = repas.ID_TYPE
-INNER JOIN aliment ON aliment.id_aliment = contenir.ID_ALIMENT
-WHERE repas.ID_REPAS = 1
-
-il faut fix la fonction pour récupérer les valeurs nutritionnelles totales pour chaque repas

@@ -968,3 +968,67 @@ function calcEnergieUser(apiData,id_user){
         }
     });
 }
+
+
+
+$(function() {
+    // Define your API endpoint URL
+    const apiUrl =prefix+ "aliments.php?where=";
+
+    // Function to perform autocomplete
+    $("#autocomplete").autocomplete({
+        minLength: 2,
+        source: function(request, response) {
+            // Make an AJAX request to your API endpoint
+            $.ajax({
+                url: apiUrl+request.term,
+                dataType: "json",
+                data: {
+                    term: request.term
+                },
+                success: function(data) {
+                    // Create an array to store autocomplete options
+                    const autocompleteData = [];
+
+                    // Iterate through the API response
+                    data.forEach(item => {
+                        // Add an object with 'value' and 'label' properties
+                        autocompleteData.push({
+                            label: item.NOM_ALIMENT, // Displayed suggestion
+                            value: item.ID_ALIMENT, // Actual value
+                        });
+                    });
+
+                    response(autocompleteData);
+                    
+                },
+                select: function(event,ui){
+                        
+                }
+            });
+        },
+        focus: function(event, ui) {
+            // prevent autocomplete from updating the textbox
+            event.preventDefault();
+            // manually update the textbox
+            $(this).val(ui.item.label);
+        },
+        select: function(event, ui) {
+            // prevent autocomplete from updating the textbox
+            event.preventDefault();
+            // manually update the textbox and hidden field
+            $(this).val("");
+            $("#autocomplete-value").append('<input type="hidden" value="'+ui.item.value+'">');
+            $("#ajoutAlimentFromDB").append('<br><p>'+ui.item.label+'</p>');
+        }
+    });
+});
+
+function addAlimentFromDB(id_user){
+    event.preventDefault();
+    var aliments = document.getElementById("autocomplete-value").childNodes;
+    for(var i=0;i<aliments.length;i++){
+        console.log(aliments[i].value);
+    }
+}
+

@@ -18,6 +18,9 @@ switch($method){
         if(isset($_GET['id_aliment'])){
             $query=$pdo->prepare('select * from `aliment` WHERE `ID_ALIMENT`="'.$_GET['id_aliment'].'"');
         }
+        elseif(isset($_GET['where'])){
+            $query=$pdo->prepare('select * from `aliment` WHERE nom_aliment LIKE "'.$_GET['where'].'%"');
+        }
         else{
             $query=$pdo->prepare('select * from `aliment`');
         }

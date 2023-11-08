@@ -65,9 +65,20 @@
                     <option value="4">Dîner</option>
                 </select>
             </div>
+            
             <br>
+</div>
+<div class="form-group" id="ajoutAlimentFromDB">
+    <label for="autocomplete">Search: </label>
+    <input type="text" id="autocomplete">
+    <div id="suggestions"></div>
+    <input type="hidden" id="valueId">
+    <p>Aliments du repas</p>
 </div>
 <div class="buttonWrapper">
     <input type="hidden" value="0" id="hasAliment">
-    <button onclick="addAlimentInput();">Ajouter un aliment</button>
+    <button onclick="addAlimentFromDB(id_user);">Ajouter un aliment</button>
+</div>
+<div id="autocomplete-value">
+
 </div>

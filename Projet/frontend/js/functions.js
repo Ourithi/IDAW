@@ -411,7 +411,7 @@ function login(){
                 data: user,
                 success(response){
                     console.log("session créée");
-                    window.location.href = "./index.php";
+                    window.location.href = "./accueil.php";
                 },
                 error: function(xhr,status,error){
                     console.log("erreur lors de la création de la session",status,error);
@@ -578,13 +578,6 @@ function defTableAlimentsRepas(id_repas){
         columns: [
             {data:'id_aliment', visible:false},
             {data:'nom_aliment'},
-            {data:'energie'},
-            {data:'lipides'},
-            {data:'glucides'},
-            {data:'sucre'},
-            {data:'fibres'},
-            {data:'proteines'},
-            {data:'sel'},
             {data:'quantite'},
             {
             data: null,
@@ -964,7 +957,7 @@ function calcEnergieUser(apiData,id_user){
             else{
                 var bmr =  447.593 + 9.247* poids + 3.098*taille - 4.330*age;
             }
-            dispGraph(apiData,bmr*activite);
+            dispGraph(apiData,bmr*activite/10);
             console.log("activite:",activite)
             console.log("bmr:",bmr*activite);
             //return(Array(data["NAME"]),data["TAILLE"],data["POIDS"],data["AGE"],data["SEXE"]);

@@ -1,0 +1,534 @@
+{
+	"info": {
+		"_postman_id": "ae330aaf-1247-4568-8834-1070b46b90e2",
+		"name": "Projet IDAW",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30554799"
+	},
+	"item": [
+		{
+			"name": "CRUD user",
+			"item": [
+				{
+					"name": "Create user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test_api\",\r\n    \"pwd\": \"test\",\r\n    \"taille\": \"150\",\r\n    \"poids\": \"50\",\r\n    \"sexe\": \"F\",\r\n    \"age\": \"16\",\r\n    \"id_activite\": \"2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/user.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"user.php"
+							]
+						},
+						"description": "création utilisateur"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/user.php?id_user=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"user.php"
+							],
+							"query": [
+								{
+									"key": "id_user",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Récupérer un utilisateur"
+					},
+					"response": []
+				},
+				{
+					"name": "modif user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_user\":\"4\",\r\n    \"name\": \"test_modif\",\r\n    \"taille\": \"150\",\r\n    \"poids\": \"50\",\r\n    \"sexe\": \"M\",\r\n    \"age\": \"16\",\r\n    \"id_activite\": \"2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/user.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"user.php"
+							]
+						},
+						"description": "Editer un utilisateur"
+					},
+					"response": []
+				},
+				{
+					"name": "suppression user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"3\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/user.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"user.php"
+							]
+						},
+						"description": "Supprimer un utilisateur"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD aliment",
+			"item": [
+				{
+					"name": "get all aliments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments.php"
+							]
+						},
+						"description": "Récupérer la liste de tous les aliments"
+					},
+					"response": []
+				},
+				{
+					"name": "get un aliment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments.php?id_aliment=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments.php"
+							],
+							"query": [
+								{
+									"key": "id_aliment",
+									"value": "0"
+								}
+							]
+						},
+						"description": "Récupérer un aliment"
+					},
+					"response": []
+				},
+				{
+					"name": "créer un aliment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nom_aliment\":\"aliment test\",\r\n    \"energie\": \"1\",\r\n    \"glucides\": \"1\",\r\n    \"lipides\": \"1\",\r\n    \"sucre\": \"1\",\r\n    \"fibres\": \"1\",\r\n    \"proteines\": \"1\",\r\n    \"sel\": \"1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments.php"
+							]
+						},
+						"description": "Ajouter un aliment à la base de données"
+					},
+					"response": []
+				},
+				{
+					"name": "update aliment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_aliment\":\"1\",\r\n    \"energie\":\"43\",\r\n    \"glucides\":\"7.8\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments.php"
+							]
+						},
+						"description": "Mettre à jour un aliment de la base de donnée"
+					},
+					"response": []
+				},
+				{
+					"name": "delete aliment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_aliment\":\"2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments.php"
+							]
+						},
+						"description": "Supprimer un aliment de la base de données"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD repas",
+			"item": [
+				{
+					"name": "get 1 repas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/repas.php?id_user=1&id_repas=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"repas.php"
+							],
+							"query": [
+								{
+									"key": "id_user",
+									"value": "1"
+								},
+								{
+									"key": "id_repas",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Voir un repas"
+					},
+					"response": []
+				},
+				{
+					"name": "create repas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_user\":\"1\",\r\n    \"id_type\":\"3\",\r\n    \"date\":\"2023-10-12\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/repas.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"repas.php"
+							]
+						},
+						"description": "Créer un repas"
+					},
+					"response": []
+				},
+				{
+					"name": "update repas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_repas\":\"1\",\r\n    \"id_type\":\"1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/repas.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"repas.php"
+							]
+						},
+						"description": "Mettre à jour un repas"
+					},
+					"response": []
+				},
+				{
+					"name": "delete repas",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_repas\":\"1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/repas.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"repas.php"
+							]
+						},
+						"description": "Supprimer un repas"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD aliment repas",
+			"item": [
+				{
+					"name": "Add aliment to repas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_repas\":\"1\",\r\n    \"id_aliment\":\"1\",\r\n    \"quantite\":\"100\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments_repas.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments_repas.php"
+							]
+						},
+						"description": "Ajouter un aliment à un repas"
+					},
+					"response": []
+				},
+				{
+					"name": "get aliments pour un repas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/aliments_repas.php?id_repas=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"aliments_repas.php"
+							],
+							"query": [
+								{
+									"key": "id_repas",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Voir le contenu d'un repas"
+					},
+					"response": []
+				},
+				{
+					"name": "edit qte aliment repas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id_repas\":\"1\",\r\n    \"id_aliment\":\"1225\",\r\n    \"qte\":\"400\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/edit_repas.php",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"edit_repas.php"
+							]
+						},
+						"description": "Modifier la quantité d'un aliment dans un repas"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD journal",
+			"item": [
+				{
+					"name": "get meals between dates",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/IDAW/Projet/backend/journal.php?date_min=2023-07-12&date_max=2023-07-15&id_user=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"IDAW",
+								"Projet",
+								"backend",
+								"journal.php"
+							],
+							"query": [
+								{
+									"key": "date_min",
+									"value": "2023-07-12"
+								},
+								{
+									"key": "date_max",
+									"value": "2023-07-15"
+								},
+								{
+									"key": "id_user",
+									"value": "1"
+								}
+							]
+						},
+						"description": "Récupérer les repas d'un utilisateur entre deux dates"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost/IDAW/Projet/backend/login.php?name=touriachi&pwd=test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"IDAW",
+						"Projet",
+						"backend",
+						"login.php"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "touriachi"
+						},
+						{
+							"key": "pwd",
+							"value": "test"
+						}
+					]
+				},
+				"description": "Connexion utilisateur"
+			},
+			"response": []
+		}
+	]
+}

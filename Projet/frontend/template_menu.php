@@ -2,10 +2,10 @@
     require_once('config.php');
     function renderMenuToHTML($currentPageId) {
             // idPage titre
-        $login_text = "login";
+        $login_text = "connexion";
         $login_href = "login";
         if(isset($_SESSION['id_user'])){
-            $login_text = "logout";
+            $login_text = "déconnexion";
             $login_href = "session";
         }    
         $mymenu = array('accueil','profil','page_aliments','journal');

@@ -30,13 +30,6 @@
             <tr>
                 <th scope="col">Id aliment</th>
                 <th scope="col">Nom</th>
-                <th scope="col">Energie (kcal)</th>
-                <th scope="col">Lipides (g)</th>
-                <th scope="col">Glucides (g)</th>
-                <th scope="col">Sucres (g)</th>
-                <th scope="col">Fibres (g)</th>
-                <th scope="col">Proteines (g)</th>
-                <th scope="col">Sel (g)</th>
                 <th scope="col">Quantite (g)</th>
                 <th scope="col">Modifier/Supprimer</th>
             </tr>

@@ -65,6 +65,7 @@
                     <option value="4">Dîner</option>
                 </select>
             </div>
+            <br>
 </div>
 <div class="buttonWrapper">
     <input type="hidden" value="0" id="hasAliment">

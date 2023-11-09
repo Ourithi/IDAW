@@ -38,12 +38,4 @@
         </tbody>
         </table>
 
-<div id="addRepas">
-    <h2>Ajouter un repas</h2>
-    <form id="aliment-form">
-</div>
-<div class="buttonWrapper">
-    <input type="hidden" value="0" id="hasAliment">
-    <button onclick="addAlimentRepasInput();">Ajouter un aliment</button>
-</div>
 <script>defTableAlimentsRepas(id_repas)</script>

@@ -23,5 +23,47 @@
         <tbody>
         </tbody>
         </table>
+<div id="addAliment">
+    <h2>Ajouter un aliment</h2>
+    <form id="formAliment" onsubmit="addAlimentAjax();">
+        <div class="form-group">
+            <label for="nom_aliment">Nom de l'aliment</label>
+            <input type="text" id="nom_aliment" name="nom_aliment" required>
+        </div>
+        <div class="form-group">
+            <label for="energie">Energie (pour 100g)</label>
+            <input type="number" id="energie" name="energie" required>
+        </div>
+        <div class="form-group">
+            <label for="lipides">Lipides (pour 100g)</label>
+            <input type="number" id="lipides" name="lipides" required>
+        </div>
+        <div class="form-group">
+            <label for="glucides">Lipides (pour 100g)</label>
+            <input type="number" id="glucides" name="glucides" required>
+        </div>
+        <div class="form-group">
+            <label for="sucre">Sucre (pour 100g)</label>
+            <input type="number" id="sucre" name="sucre" required>
+        </div>
+        <div class="form-group">
+            <label for="fibres">Fibres (pour 100g)</label>
+            <input type="number" id="fibres" name="fibres" required>
+        </div>
+        <div class="form-group">
+            <label for="proteines">Lipides (pour 100g)</label>
+            <input type="number" id="proteines" name="proteines" required>
+        </div>
+        <div class="form-group">
+            <label for="sel">Sel (pour 100g)</label>
+            <input type="number" id="sel" name="sel" required>
+        </div>
+        <div class="form-group">
+            <button type="submit">Ajouter</button>
+        </div>
+</form>
+</div>
+
+
 
 <script>defTableAliments()</script>

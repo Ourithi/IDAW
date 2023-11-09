@@ -42,7 +42,7 @@
             <th scope="col">Fibres (g)</th>
             <th scope="col">Proteines (g)</th>
             <th scope="col">Sel (g)</th>
-            <th scope="col">Voir le contenu du repas<th>
+            <th scope="col">Voir le contenu du repas/Supprimer le repas<th>
         </tr>
     </thead>
 <tbody>

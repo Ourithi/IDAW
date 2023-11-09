@@ -86,6 +86,7 @@ function getAlimentsAjax(){
 };
 
 function defTableAliments(){
+    $('#AlimentsTable').DataTable().clear().destroy();
     $('#AlimentsTable').DataTable({
         "language": {
             "lengthMenu": "Afficher _MENU_ résultats par page",
@@ -386,7 +387,8 @@ function defTableJournal(repas){
             {
             data: null,
             render: function(data, type, row) {
-                return '<button onclick="voirRepas(this);">Voir le repas</button>';
+                return '<button onclick="voirRepas(this);">Voir le repas</button>'+
+                '<button onclick="deleteRepasAjax(this);">Supprimer le repas</button>';
             }
             }   
         ]
@@ -970,7 +972,6 @@ function calcEnergieUser(apiData,id_user){
 }
 
 
-
 $(function() {
     // Define your API endpoint URL
     const apiUrl =prefix+ "aliments.php?where=";
@@ -1089,3 +1090,43 @@ function addAlimentFromDBAjax(id_user){
     })
 }
 
+function deleteRepasAjax(button) {
+    var table = $('#JournalTable').DataTable();
+    var rowData = table.row($(button).closest('tr')).data();
+
+    if (rowData) {
+        var id_repas = rowData.id_repas;
+        data= {id_repas:id_repas};
+        $.ajax({
+            type: 'DELETE',
+            contentType: 'application/json',
+            url: prefix+ 'repas.php',
+            data: JSON.stringify(data),
+            success(response){
+                console.log("Repas supprimé");
+                delRow(button);
+            }
+        })
+    }
+}
+
+function addAlimentAjax(){
+    event.preventDefault();
+    var champs = ['nom_aliment','energie', 'lipides', 'glucides', 'sucre', 'fibres', 'proteines', 'sel',];
+    var data = {};
+    for(var i=0;i<champs.length;i++){
+        data[champs[i]]=document.getElementById(champs[i]).value;
+        document.getElementById(champs[i]).value = "";
+    }
+    //console.log(data);
+    $.ajax({
+        type: 'POST',
+        url: prefix+'aliments.php',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success(response){
+            console.log("Aliment ajouté a la bdd");
+            defTableAliments();
+        }
+    })
+}

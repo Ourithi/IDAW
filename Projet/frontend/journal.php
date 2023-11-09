@@ -69,16 +69,21 @@
             <br>
 </div>
 <div class="form-group" id="ajoutAlimentFromDB">
-    <label for="autocomplete">Search: </label>
+    <label for="qteAliment">Quantité </label>
+    <input type="number" id="qteAliment">
+    <label for="autocomplete">Recherche: </label>
     <input type="text" id="autocomplete">
     <div id="suggestions"></div>
     <input type="hidden" id="valueId">
+    <button onclick="validerAliment()">Ajouter l'aliment</button>
+    <input type="hidden" id="current-alim-id" value="">
+    <input type="hidden" id="current-alim-name" value="">
     <p>Aliments du repas</p>
+    <div id="list_aliment"></div>
 </div>
 <div class="buttonWrapper">
     <input type="hidden" value="0" id="hasAliment">
-    <button onclick="addAlimentFromDB(id_user);">Ajouter un aliment</button>
+    <button onclick="addAlimentFromDBAjax(id_user);">Ajouter le repas</button>
 </div>
-<div id="autocomplete-value">
-
-</div>
+<div id="autocomplete-value-id"></div>
+<div id="autocomplete-value-qte"></div>

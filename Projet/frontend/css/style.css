@@ -201,3 +201,7 @@ id_repas
 .form-group{
     background-color: white;
 }
+
+.ui-helper-hidden-accessible{
+    display:none !important;
+}

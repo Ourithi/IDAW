@@ -1017,18 +1017,75 @@ $(function() {
             // prevent autocomplete from updating the textbox
             event.preventDefault();
             // manually update the textbox and hidden field
-            $(this).val("");
-            $("#autocomplete-value").append('<input type="hidden" value="'+ui.item.value+'">');
-            $("#ajoutAlimentFromDB").append('<br><p>'+ui.item.label+'</p>');
+            $(this).val(ui.item.label); //on remplit la boite de texte avec l'aliment
+            var qte = document.getElementById("qteAliment").value;
+            $("#current-alim-id").val(ui.item.value); //on stocke la valeur de l'id de l'aliment dans un élément
+            $("#current-alim-name").val(ui.item.label); //on stocke le nom de l'aliment
         }
     });
 });
 
-function addAlimentFromDB(id_user){
+function validerAliment(){
     event.preventDefault();
-    var aliments = document.getElementById("autocomplete-value").childNodes;
-    for(var i=0;i<aliments.length;i++){
-        console.log(aliments[i].value);
-    }
+    var qte = document.getElementById("qteAliment").value; //recup qte
+    var id = document.getElementById("current-alim-id").value; //recup id aliment
+    var name = document.getElementById("current-alim-name").value; 
+    document.getElementById("qteAliment").value = 0; //reset qte
+    document.getElementById("autocomplete").value = ""; //reset name
+    $("#autocomplete-value-id").append('<input type="hidden" value="'+id+'">'); //stocke id aliment
+    $("#autocomplete-value-qte").append('<input type="hidden" value="'+qte+'">'); //stocke qte aliment
+    $("#list_aliment").append('<br><p>'+name+'</p>'); //ajoute aliment a liste visible par user
+}
+
+function addAlimentFromDBAjax(id_user){
+    event.preventDefault();
+    var idAliments = document.getElementById("autocomplete-value-id").childNodes;
+    var qteAliments = document.getElementById("autocomplete-value-qte").childNodes;
+    //console.log(idAliments);
+    //console.log(qteAliments);
+    var date = document.getElementById("dateRepas").value;
+    var id_type = document.getElementById("typeRepas").value;
+    var data = {id_user:id_user,
+            date:date,
+            id_type:id_type
+        };
+    console.log(data);
+    $.ajax({
+        type: 'POST',
+        url: prefix+'repas.php',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success(response){
+            var id_repas = response["id_repas"];
+            console.log("id_repas: ",id_repas);
+            for(var i=0;i<idAliments.length;i++){
+                var id_aliment = idAliments[i].value;
+                var qte = qteAliments[i].value;
+                var data = {
+                    id_aliment: id_aliment,
+                    quantite: qte,
+                    id_repas:id_repas
+                }
+                $.ajax({
+                    type: "POST",
+                    url: prefix+'aliments_repas.php',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success(response){
+                        console.log("aliment ajouté au repas");
+                        document.getElementById("list_aliment").innerHTML = "";
+                    },
+                    error: function (xhr, status, error) {
+                        // Handle errors here
+                        console.log("erreur",status,error,xhr);
+                    }
+                })
+            }
+        },
+        error: function (xhr, status, error) {
+            // Handle errors here
+            console.log("erreur",status,error,xhr);
+        }
+    })
 }
 
